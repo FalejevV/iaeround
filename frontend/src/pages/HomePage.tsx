@@ -6,7 +6,7 @@ function HomePage(){
     return(
         <>
             <Header profileImage="" extended={true}/>
-            <CardGrid />
+            <CardGrid extended={true} />
         </>
     )
 }

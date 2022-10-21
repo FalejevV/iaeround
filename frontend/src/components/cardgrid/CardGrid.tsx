@@ -3,10 +3,12 @@ import { Container } from "../Styles.styled";
 import { CGrid } from "./CardGrid.styled";
 
 
-function CardGrid(){
+function CardGrid(props:{
+    extended: boolean,
+}){
     return(
         <Container>
-            <CGrid>
+            <CGrid extended={props.extended}>
                 <InfoCard />
                 <InfoCard />
                 <InfoCard />

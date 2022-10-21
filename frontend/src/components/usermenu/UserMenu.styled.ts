@@ -33,14 +33,14 @@ export const PlusSVG = styled.svg`
 
 export const DropdownContainer = styled.div<IToggle>`
     position:absolute;
-    width:145px;
+    width:120px;
     height:fit-content;
     background-color:white;
     border-radius: 5px;
     border: 1px solid #000000;
     padding:20px;
     top:35px;
-    right:0px;
+    right:-2    0px;
     display: none;
     flex-direction: column;
     gap:15px;
@@ -65,7 +65,7 @@ export const DropdownContainer = styled.div<IToggle>`
         position:fixed;
         display: flex;
         top:unset;
-        bottom:-30vh;
+        bottom:-280px;
         right:unset;
         left:0px;
         width:100vw;

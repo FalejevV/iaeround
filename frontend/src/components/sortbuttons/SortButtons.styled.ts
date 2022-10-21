@@ -21,9 +21,4 @@ export const SortButton = styled.div<IToggle>`
     ${({ toggle }) => toggle && css`
     
     `}
-
-
-    @media(max-width:850px){
-        font-size:14px;
-    }
 `

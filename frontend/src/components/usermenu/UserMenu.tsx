@@ -10,6 +10,12 @@ function UserMenu(props:{
 {
     const [dropdownOpened, setDropdownOpened] = React.useState(false);
 
+
+    React.useEffect(() => {
+        if(window.innerWidth <= 625){
+            document.body.style.overflow = dropdownOpened ? "hidden" : "";
+        }
+    }, [dropdownOpened]);
     return(
         <MenuContainer>
             <Button>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { ISearchView } from "../interfaces";
 
 export const Container = styled.div`
     max-width: 1440px;
@@ -52,4 +53,8 @@ export const TagContainer = styled.div`
     flex-wrap: wrap;
     gap:10px;
     padding:0px 15px;
+
+    @media(max-width:850px){
+        justify-content: center;
+    }
 `
