@@ -2,11 +2,25 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const LogoLink = styled(Link)`
-    text-decoration: none;
+    display: flex;
+    align-items: center;
+    width:100%;
+    max-width:200px;
+    height:60px;
+
+    @media(max-width:850px){
+        min-width:130px;
+        max-width:130px;
+    }
+
+    @media(max-width:625px){
+        min-width:60px;
+        max-width:60px;
+    }
 `
 
 export const LogoImage = styled.img`
-    width:200px;
-    height:60px;
-    background-color:red;
+    width:100%;
+    height: 100%;
+    background-color: transparent;
 `

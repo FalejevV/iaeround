@@ -2,16 +2,22 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
-import Header from './components/header/Header';
 import reportWebVitals from './reportWebVitals';
+import HomePage from './pages/HomePage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import GlobalStyleStyled from './components/GlobalStyle.styled'; 
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
+
 root.render(
-      <>
-        <Header />
-      </>
+  <BrowserRouter>
+    <GlobalStyleStyled/>
+    <Routes>
+      <Route path="/" element={<HomePage/>} />
+    </Routes>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
