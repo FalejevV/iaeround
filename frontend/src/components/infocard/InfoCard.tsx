@@ -23,10 +23,10 @@ function InfoCard(){
                 </InfoObject>
             </InfoObjectContainer>
             <TagContainer>
-                <Tag title="Woods" />
-                <Tag title="Woods In Ass" />
-                <Tag title="Woods" />
-                <Tag title="Woods In My Ass" />
+                <Tag title="Woods" clickable={true}/>
+                <Tag title="Woods In Ass" clickable={true} />
+                <Tag title="Woods"  clickable={true}/>
+                <Tag title="Woods In My Ass" clickable={true}/>
             </TagContainer>
             <CardLikes>
                 <LikesSVG viewBox="0 0 24 24" width="24" height="24">

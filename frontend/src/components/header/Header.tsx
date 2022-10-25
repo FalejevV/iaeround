@@ -8,12 +8,26 @@ import LogoSmall from "../../img/LogoSmall.svg";
 import UserMenu from "../usermenu/UserMenu";
 import { TagContainer } from "../Styles.styled";
 import Tag from "../tag/Tag";
+import { useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import { nanoid } from "@reduxjs/toolkit";
 
 function Header(props:{
     displayFilters?: boolean,
     profileImage:string,
     extended?:boolean,
 }){
+
+    const tagsSelector = useAppSelector((state:RootState) => state.searchFilter.tags);
+
+    function displaySelectedTags(){
+        if(tagsSelector.length > 0){
+            let tagObjectArray = tagsSelector.map((tag:string) => <Tag key={nanoid()} deletable={true} title={tag} />);
+            return(tagObjectArray);
+        }
+        return "";
+    }
+
     return(
         <HeaderContainer>
             <TopBar extended={props.extended || false}>
@@ -28,12 +42,7 @@ function Header(props:{
                 <FilterTagBarContainer>
                     <SortButtons />
                     <TagContainer>
-                        <Tag title="Lake" deletable={true} />
-                        <Tag title="City" deletable={true} />
-                        <Tag title="Shops" deletable={true} />
-                        <Tag title="Lake" deletable={true} />
-                        <Tag title="City" deletable={true} />
-                        <Tag title="Shops" deletable={true} />
+                        {displaySelectedTags()}
                     </TagContainer>
                 </FilterTagBarContainer>
                 

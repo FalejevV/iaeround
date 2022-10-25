@@ -18,6 +18,7 @@ export const TagContainer = styled.div<ITag>`
     border-radius: 0px 5px 0px 5px;
     gap:5px;
     border:1px solid #5f5f5f;
+    user-select: none;
     ${({ clickable }) => clickable && css`
         cursor: pointer;
     `}

@@ -53,7 +53,6 @@ export const TopBar = styled.div<ISearchView>`
 `
 
 export const FilterTagBarContainer = styled(Container)`
-    width:100%;
     display: flex;
     width:100%;
     justify-content: flex-start;
@@ -81,7 +80,6 @@ export const FilterTagBarContainer = styled(Container)`
 
 export const FilterTagBar = styled.div<ISearchView>`
     width:100%;
-
     transition:all 0.3s;
     height:0px;
     overflow:hidden;

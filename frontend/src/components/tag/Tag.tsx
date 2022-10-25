@@ -1,3 +1,5 @@
+import { useAppDispatch } from "../../app/hooks";
+import { addTag, removeTag } from "../../features/SearchFilter";
 import { TagCloseSVG, TagContainer, TagText } from "./Tag.styled";
 
 function Tag(props:{
@@ -6,8 +8,21 @@ function Tag(props:{
     deletable?: boolean,
 })
 {
+
+    const dispatch = useAppDispatch();
+
+    function doTagActions(tagTitle:string){
+        if(tagTitle.trim() !== ""){
+            if(props.clickable){
+                dispatch(addTag(tagTitle));
+            }else if (props.deletable){
+                dispatch(removeTag(tagTitle));
+            }
+        }
+    }
+
     return(
-        <TagContainer clickable={props.clickable || false} deletable={props.deletable || false}>
+        <TagContainer onClick={() => doTagActions(props.title)}  clickable={props.clickable || false} deletable={props.deletable || false}>
             <TagText>
                 {props.title}
             </TagText>

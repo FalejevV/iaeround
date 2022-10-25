@@ -12,12 +12,14 @@ const root = createRoot(container);
 
 
 root.render(
-  <BrowserRouter>
-    <GlobalStyleStyled/>
-    <Routes>
-      <Route path="/" element={<HomePage/>} />
-    </Routes>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <GlobalStyleStyled/>
+      <Routes>
+        <Route path="/" element={<HomePage/>} />
+      </Routes>
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
