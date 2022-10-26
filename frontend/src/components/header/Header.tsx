@@ -41,9 +41,11 @@ function Header(props:{
             <FilterTagBar extended={props.extended || false}>
                 <FilterTagBarContainer>
                     <SortButtons />
-                    <TagContainer>
-                        {displaySelectedTags()}
-                    </TagContainer>
+                    { displaySelectedTags() !== "" &&
+                        <TagContainer>
+                            {displaySelectedTags()}
+                        </TagContainer>
+                    }
                 </FilterTagBarContainer>
                 
             </FilterTagBar>

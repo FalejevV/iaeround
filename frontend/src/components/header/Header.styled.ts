@@ -55,10 +55,10 @@ export const TopBar = styled.div<ISearchView>`
 export const FilterTagBarContainer = styled(Container)`
     display: flex;
     width:100%;
+    height:100%;
     justify-content: flex-start;
     gap:131px;
     align-items: center;
-
     @media(max-width:1100px){
         gap:80px;
     }
@@ -72,10 +72,6 @@ export const FilterTagBarContainer = styled(Container)`
         padding-right:0px;
         padding:15px;
     }
-
-   
-
-
 `
 
 export const FilterTagBar = styled.div<ISearchView>`

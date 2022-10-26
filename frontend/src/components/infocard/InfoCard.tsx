@@ -2,7 +2,6 @@ import { TagContainer } from "../Styles.styled";
 import Tag from "../tag/Tag";
 import { CardContainer, CardImage, CardLikes, CardText, CardTitle, DistanceSVG, InfoObject, InfoObjectContainer, LikesSVG, LikesText, TimeSVG } from "./InfoCard.styled";
 
-
 function InfoCard(){
     return(
         <CardContainer>
