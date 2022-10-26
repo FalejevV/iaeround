@@ -1,10 +1,14 @@
-const express = require('express');
+import express from 'express';
 const app = express();
+import dotenv from "dotenv";
+dotenv.config();
+import userRoutes from "./database/routes/User.routes.js";
+const port = process.env.PORT || 3001;
 
-app.get("/api" , (req,res) =>{
-    res.json({"users": ["user1", "user2"]});
-})
+app.use(express.json());
+app.use("/api", userRoutes)
 
-app.listen(5000, () =>{
-    console.log("server at port 5000");
+
+app.listen(port, () =>{
+    console.log("server at post " + port);
 })
