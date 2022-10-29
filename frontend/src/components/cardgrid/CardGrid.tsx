@@ -22,10 +22,6 @@ function CardGrid(props:{
                 <InfoCard />
                 <InfoCard />
                 <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
             </CGrid>
         </Container>
     )

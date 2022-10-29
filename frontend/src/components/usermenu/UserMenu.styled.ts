@@ -111,7 +111,9 @@ export const ProfileImage = styled.img`
     height:70px;
     border-radius: 50%;
     padding: 5px;
-    border:3px solid #3E6144;
+    ${({ theme }) => theme && css`
+        border:3px solid ${theme.accentColor};
+    `}
     cursor:pointer;
 
     @media(max-width:850px){

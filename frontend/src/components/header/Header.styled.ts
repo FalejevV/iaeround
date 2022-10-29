@@ -3,7 +3,7 @@ import { ISearchView } from "../../interfaces";
 import { Button, Container } from "../Styles.styled";
 
 export const HeaderContainer = styled.div`
-    width:100%;
+    width:100vw;
     background-color: white;
     box-shadow: 0 0 15px 1px #c0c0c0;
     height:fit-content;
@@ -39,16 +39,19 @@ export const TopBarContainer = styled(Container)`
 
 export const TopBar = styled.div<ISearchView>`
     width:100%;
-    height:90px;
+    max-height: 90px;
+    min-height: 90px;
+    transition: all 0.3s;
     border-bottom: 1px solid #c9c9c9;
-
-
-    ${({ extended }) => !extended && css`
-        border-bottom: 3px solid #3E6144;
+    ${({ extended, theme }) => !extended && css`
+        border-bottom: 3px solid ${theme.accentColor};
+        max-height: 92px;
+        min-height: 92px;
     `}
 
     @media(max-width:350px){
-        height:70px;
+        max-height: 70px;
+        min-height: 70px;
     }
 `
 
@@ -75,13 +78,16 @@ export const FilterTagBarContainer = styled(Container)`
 `
 
 export const FilterTagBar = styled.div<ISearchView>`
+    transition: all 0.5s, border 0.7s;
     width:100%;
-    transition:all 0.3s;
-    height:0px;
-    overflow:hidden;
-    ${({ extended }) => extended && css`
-        height:fit-content;
-        border-bottom: 3px solid #3E6144;
+    max-height: 0px;
+    overflow: hidden;
+    opacity:0;
+    ${({ extended, theme }) => extended && css`
+        transition: all 2s, border 0.7s;
+        max-height: 500px;
+        opacity:1;
+        border-bottom: 3px solid ${theme.accentColor};
         overflow:visible;
     `}
 `

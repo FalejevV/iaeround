@@ -19,12 +19,12 @@ export const SortButton = styled.div<IToggle>`
         color:#000000;
     }
 
-    ${({ toggle }) => toggle && css`
-        color:#3E6144;
+    ${({ toggle,theme }) => toggle && css`
+        color:${theme.accentColor};
         transform: scale(1.15);
         
         &:hover{
-            color:#3E6144;
+            color:${theme.accentColor};
         }
     `}
 `

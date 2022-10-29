@@ -1,11 +1,15 @@
+import React from "react";
 import CardGrid from "../components/cardgrid/CardGrid";
-import Header from "../components/header/Header";
 
 
-function HomePage(){
+function HomePage(props:{
+    headerExtend:any
+}){
+    React.useEffect(() => {
+        props.headerExtend(true);
+    })
     return(
         <>
-            <Header profileImage="" extended={true}/>
             <CardGrid extended={true} />
         </>
     )

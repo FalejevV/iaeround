@@ -29,12 +29,21 @@ export const TagContainer = styled.div<ITag>`
         }
     `}
 
+    ${({ chosen }) => chosen && css`
+        background-color: #d1ebcf;
+    `}
+
     transition: all 0.3s;
     &:hover{
         background-color: rgb(0,0,0,0.05);
         ${TagCloseSVG}{
             transform: scale(1.3);
         }
+
+        ${({ chosen }) => chosen && css`
+            background-color: #aedcab;
+        `}
+
     }
 
     cursor: pointer;

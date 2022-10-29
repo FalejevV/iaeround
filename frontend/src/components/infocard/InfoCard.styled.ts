@@ -70,7 +70,10 @@ export const CardLikes = styled.div`
 
 
 export const LikesSVG = styled.svg`
-    fill:#21612D;
+    ${({ theme }) => theme && `
+        fill:${theme.accentColor}
+    `}
+    
 `
 
 export const LikesText = styled.p`

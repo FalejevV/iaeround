@@ -3,12 +3,8 @@ import db from "../../database.js";
 import { nanoid } from "nanoid";
 class UserController{
     async createUser(req, res){
-        const {login, name, about, email, password} = req.body;
-        const newPerson = await db.query(`INSERT INTO users (id,login,name,about,email,password) values ('${nanoid()}', '${login}', '${name}', '${about}', '${email}', '${password}')`);
-        console.log("AS");
-        res.json({
-            "OK" : "OK"
-        })
+        //const {login, name, about, email, password} = req.body;
+        //const newPerson = await db.query(`INSERT INTO users (id,login,name,about,email,password) values ('${nanoid()}', '${login}', '${name}', '${about}', '${email}', '${password}')`);
     }
     async getAllUsers(req, res){
 

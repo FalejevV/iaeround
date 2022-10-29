@@ -7,6 +7,7 @@ export interface IToggle{
 export interface ITag{
     clickable?: boolean,
     deletable?: boolean,
+    chosen?: boolean,
 }
 
 export interface ISearchView{

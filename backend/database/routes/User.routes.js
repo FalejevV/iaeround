@@ -4,10 +4,10 @@ import userController from '../controllers/User.controller.js';
 
 
 router.post("/user", userController.createUser);
-router.post("/user", userController.getAllUsers);
-router.post("/user/:id", userController.getOneUser);
-router.post("/user", userController.updateUser);
-router.post("/user/:id", userController.deleteUser);
+router.get("/user", userController.getAllUsers);
+router.get("/user/:id", userController.getOneUser);
+router.put("/user", userController.updateUser);
+router.delete("/user/:id", userController.deleteUser);
 
 
 export default router;
