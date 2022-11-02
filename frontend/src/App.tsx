@@ -7,13 +7,15 @@ import GlobalStyleStyled from "./components/GlobalStyle.styled";
 import Header from "./components/header/Header";
 import CreateRoute from "./pages/CreateRoute";
 import HomePage from "./pages/HomePage";
-
 const theme={
     accentColor: '#3E6144',
 }
 
+
 function App(){
+    
     const [headerExtend, setHeaderExtend] = React.useState(true);
+    
     return(
         <ThemeProvider theme={{
             ...theme,

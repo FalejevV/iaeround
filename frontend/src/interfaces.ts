@@ -4,10 +4,15 @@ export interface IToggle{
     toggle:boolean,
 }
 
+export interface IFilledOk{
+    toggle:boolean,
+    ok:boolean,
+}
+
 export interface ITag{
     clickable?: boolean,
     deletable?: boolean,
-    chosen?: boolean,
+    chosen?: boolean
 }
 
 export interface ISearchView{
@@ -20,7 +25,7 @@ export interface IRoute{
     date: string,
     distance: number,
     time: number,
-    likes: number,
+    likes: string[],
     tags: string[],
     gpx: string,
     images: string[],

@@ -1,6 +1,7 @@
 import { useAppDispatch } from "../../app/hooks";
 import { addTag, removeTag } from "../../features/SearchFilter";
 import { TagCloseSVG, TagContainer, TagText } from "./Tag.styled";
+import {nanoid} from "nanoid";
 
 function Tag(props:{
     title:string,

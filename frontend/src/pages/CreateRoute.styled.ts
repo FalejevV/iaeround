@@ -8,7 +8,10 @@ export const FormContainer = styled(Container)`
 export const Form = styled.form`
     padding-top: 170px;
     width:100%;
-    height:1000px;
+
+    display: flex;
+    flex-direction: column;
+    gap:15px;
 `
 
 export const TopGrid = styled.div`
@@ -19,6 +22,11 @@ export const TopGrid = styled.div`
     padding-bottom: 15px;
 `
 
+export const TopFlexbox = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+`
 export const TagsAboutContainer = styled.div`
     width:100%;
 `
@@ -32,6 +40,8 @@ export const TagsContainer= styled.div`
     height:fit-content;
     display: flex;
     gap:10px;
+    display: flex;
+    flex-wrap: wrap;
 `
 
 export const TagClickContainer = styled.div`

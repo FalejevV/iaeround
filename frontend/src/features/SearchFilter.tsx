@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EnumType } from "typescript";
 import { Order } from "../enums";
 import { ISearchFilter } from "../interfaces";
 

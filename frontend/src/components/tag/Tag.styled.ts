@@ -52,6 +52,6 @@ export const TagContainer = styled.div<ITag>`
 export const TagText = styled.p`
     text-align: center;
     font-size: 14px;
-
+    white-space: nowrap;
 `
 

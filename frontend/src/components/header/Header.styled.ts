@@ -41,7 +41,7 @@ export const TopBar = styled.div<ISearchView>`
     width:100%;
     max-height: 90px;
     min-height: 90px;
-    transition: all 0.3s;
+    transition: all 0.3s, border 0.7s;
     border-bottom: 1px solid #c9c9c9;
     ${({ extended, theme }) => !extended && css`
         border-bottom: 3px solid ${theme.accentColor};

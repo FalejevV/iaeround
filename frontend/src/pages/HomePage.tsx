@@ -10,7 +10,7 @@ function HomePage(props:{
     })
     return(
         <>
-            <CardGrid extended={true} />
+            <CardGrid/>
         </>
     )
 }

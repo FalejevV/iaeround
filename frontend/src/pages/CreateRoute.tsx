@@ -2,18 +2,24 @@ import React from "react";
 import InputField from "../components/inputfield/InputField";
 import { Label } from "../components/inputfield/InputField.styled";
 import Tag from "../components/tag/Tag";
-import { Form, FormContainer, TagClickContainer, TagsAboutContainer, TagsContainer, TopGrid } from "./CreateRoute.styled";
-
+import { Form, FormContainer, TagClickContainer, TagsAboutContainer, TagsContainer, TopFlexbox, TopGrid } from "./CreateRoute.styled";
+import LoadingAnimation from "../components/loadinganimation/LoadingAnimation";
 
 function CreateRoute(props:{
     headerExtend:any
 }){
+    const [tagDatabase, setTagDatabase] = React.useState<{id:number,title:string}[]>([]);
+    const [connectionError, setConnectionError] = React.useState("");
+    const [tags, setTags] = React.useState<string[]>([]);
 
     React.useEffect(() => {
         props.headerExtend(false);
-    });
+        console.log("fetchTags");
+        fetch(`https://hospitable-painted-cork.glitch.me/api/tags`).then(res => res.json()).then(data => setTagDatabase(data)).catch(error => {
+            setConnectionError("Could not connect to database. Sorry :/");
+        });
+    },[props]);
 
-    const [tags, setTags] = React.useState<string[]>([]);
 
     function triggerTag(tagName:string){
         if(!tags.includes(tagName)){
@@ -27,20 +33,34 @@ function CreateRoute(props:{
         <FormContainer>
             <Form>
                 <TopGrid>
-                    <InputField title="Title" />
-                    <InputField title="GPX" type="file"/>
-                    <InputField placeholder="km" title="Distance" />
-                    <InputField title="Images" type="file"/>
-                    <InputField placeholder="minutes" title="Time" />
+                    <TopFlexbox>
+                        <InputField title="Title"/>
+                        <InputField placeholder="km" title="Distance" onlyNumbers={true} />
+                        <InputField placeholder="minutes" title="Time" onlyNumbers={true}/>
+                    </TopFlexbox>
+
+                    <TopFlexbox>
+                        <InputField title="GPX" type="file"/>
+                        <InputField title="Images" type="file" imageFiles={true}/>
+                    </TopFlexbox>
+
                 </TopGrid>
                 <TagsAboutContainer>
-                    <Label>Tags</Label>
+                    <Label>Tags (Please select at least 2)</Label>
                     <TagsContainer>
-                        <TagClickContainer onClick={() => triggerTag("Forest")}>
-                            <Tag title="Forest" chosen={tags.includes("Forest")}/>
-                        </TagClickContainer>
+                        {tagDatabase.length === 0 && connectionError === "" && <LoadingAnimation/>}
+                        {connectionError && <Label>{connectionError}</Label>}
+                        {tagDatabase.map(tag => {
+                            return (
+                                <TagClickContainer key={tag.title} onClick={() => triggerTag(tag.title)}>
+                                    <Tag key={tag.id} title={tag.title} chosen={tags.includes(tag.title)}/>
+                                </TagClickContainer>
+                            )
+                        })}
                     </TagsContainer>
                 </TagsAboutContainer>
+
+                <InputField title="About" placeholder="Write something about this route" type="textfield"/>
             </Form>
         </FormContainer>
     )

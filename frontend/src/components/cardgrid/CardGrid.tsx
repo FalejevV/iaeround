@@ -1,29 +1,54 @@
+import React from "react";
+import { IRoute } from "../../interfaces";
 import InfoCard from "../infocard/InfoCard";
+import LoadingAnimation from "../loadinganimation/LoadingAnimation";
 import { Container } from "../Styles.styled";
-import { CGrid } from "./CardGrid.styled";
+import { CardsLoadButton, CGrid } from "./CardGrid.styled";
 
 
 function CardGrid(props:{
-    extended: boolean,
+    cardsAtStart?: number,
+    cardsAppend?: number,
+    apiCall?: string,
 }){
+    const [cardsTotalCounter, setCardsTotalCounter] = React.useState<number>(props.cardsAtStart || 6);
+    const [cardsFetch, setCardsFetch] = React.useState([]);
+    const [allRouteCount, setAllRouteCount] = React.useState(0);
+     
+    React.useEffect(() => {
+        console.log("fetch");
+        fetch(`https://hospitable-painted-cork.glitch.me/api/routes/${cardsTotalCounter}`).then(res => res.json()).then(data => {
+            setCardsFetch(data);
+        })
+    }, [cardsTotalCounter]);
+
+    React.useEffect(() => {
+        console.log('countFetch')
+        fetch(`https://hospitable-painted-cork.glitch.me/api/routecount`).then(res => res.json()).then(data => {
+            setAllRouteCount(data[0].count);
+        })
+    },[]);
+
+    function loadMore(){
+        if(allRouteCount > 0){
+            if(cardsTotalCounter + (props.cardsAppend || 6) > allRouteCount){
+                setCardsTotalCounter(allRouteCount);
+            }else{
+                setCardsTotalCounter(prevCounter => prevCounter + (props.cardsAppend || 6));
+            }
+        }
+    }
+    
     return(
-        <Container>
-            <CGrid extended={props.extended}>
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-                <InfoCard />
-            </CGrid>
-        </Container>
+            <Container>
+                <CGrid>
+                    {cardsFetch.map((fetchData: IRoute) => {
+                        return <InfoCard title={fetchData.title} distance={fetchData.distance} time={fetchData.time} tags={fetchData.tags} likes={fetchData.likes} key={fetchData.id} />;
+                    })}
+                </CGrid>
+                { cardsFetch.length < cardsTotalCounter && <LoadingAnimation />}
+                { cardsFetch.length === cardsTotalCounter && cardsFetch.length > 0 && <CardsLoadButton onClick={loadMore}>Load More</CardsLoadButton>}
+            </Container>
     )
 }
 
