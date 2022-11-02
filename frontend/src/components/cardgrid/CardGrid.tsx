@@ -17,14 +17,14 @@ function CardGrid(props:{
      
     React.useEffect(() => {
         console.log("fetch");
-        fetch(`https://hospitable-painted-cork.glitch.me/api/routes/${cardsTotalCounter}`).then(res => res.json()).then(data => {
+        fetch(`https://iaeround-backend.vercel.app/api/routes/${cardsTotalCounter}`).then(res => res.json()).then(data => {
             setCardsFetch(data);
         })
     }, [cardsTotalCounter]);
 
     React.useEffect(() => {
         console.log('countFetch')
-        fetch(`https://hospitable-painted-cork.glitch.me/api/routecount`).then(res => res.json()).then(data => {
+        fetch(`https://iaeround-backend.vercel.app/api/routecount`).then(res => res.json()).then(data => {
             setAllRouteCount(data[0].count);
         })
     },[]);

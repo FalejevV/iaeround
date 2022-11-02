@@ -15,7 +15,7 @@ function CreateRoute(props:{
     React.useEffect(() => {
         props.headerExtend(false);
         console.log("fetchTags");
-        fetch(`https://hospitable-painted-cork.glitch.me/api/tags`).then(res => res.json()).then(data => setTagDatabase(data)).catch(error => {
+        fetch(`https://iaeround-backend.vercel.app/api/tags`).then(res => res.json()).then(data => setTagDatabase(data)).catch(error => {
             setConnectionError("Could not connect to database. Sorry :/");
         });
     },[props]);
