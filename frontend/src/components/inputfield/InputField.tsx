@@ -10,6 +10,7 @@ function InputField(props:{
     requiredSymbols?: string,
     onlyNumbers?: boolean,
     imageFiles?: boolean,
+    isGPX?: boolean,
 }){
 
     const [inputValue, setInputValue] = React.useState<string>("");
@@ -54,11 +55,26 @@ function InputField(props:{
             for (let i = 0; i < file.length; i++) {
                 let imageFile = file[i];
                 totalFileSize += imageFile.size;
+                if(imageFile.type.slice(0,5) !== "image"){
+                    totalFileSize = -1;
+                    break
+                }
             }
-            if(totalFileSize > 2000000){
-                setAlertText("Size should be less than 2MB")
+            if(totalFileSize === -1){
+                setAlertText("Wrong image format");
+            }else if(totalFileSize > 5000000){
+                setAlertText("Size should be less than 5MB");
             }else{
                 setAlertText("")
+            }
+            if(props.isGPX){
+                const fileName = file[0].name;
+                const fileExtention = fileName.slice(-3);
+                if(fileExtention !== "gpx"){
+                    setAlertText("File should be .gpx format");
+                }else{
+                    setAlertText("");
+                }
             }
         }else
         if(inputValue.trim() !== ""){

@@ -1,9 +1,10 @@
-import React from "react";
+import React, {FormEvent } from "react";
 import InputField from "../components/inputfield/InputField";
 import { Label } from "../components/inputfield/InputField.styled";
 import Tag from "../components/tag/Tag";
 import { Form, FormContainer, TagClickContainer, TagsAboutContainer, TagsContainer, TopFlexbox, TopGrid } from "./CreateRoute.styled";
 import LoadingAnimation from "../components/loadinganimation/LoadingAnimation";
+import { Button } from "../components/Styles.styled";
 
 function CreateRoute(props:{
     headerExtend:any
@@ -11,6 +12,7 @@ function CreateRoute(props:{
     const [tagDatabase, setTagDatabase] = React.useState<{id:number,title:string}[]>([]);
     const [connectionError, setConnectionError] = React.useState("");
     const [tags, setTags] = React.useState<string[]>([]);
+    const [submitStatus, setSubmitStatus] = React.useState('');
 
     React.useEffect(() => {
         props.headerExtend(false);
@@ -29,9 +31,39 @@ function CreateRoute(props:{
         }
     }
 
+    function formSubmit(e:FormEvent<HTMLFormElement>){
+        e.preventDefault();
+        const titleInput = e.currentTarget.elements[0] as HTMLInputElement;
+        const distanceInput = e.currentTarget.elements[1] as HTMLInputElement;
+        const timeInput = e.currentTarget.elements[2] as HTMLInputElement;
+        const gpxInput = e.currentTarget.elements[3] as HTMLInputElement;
+        const imagesInput = e.currentTarget.elements[4] as HTMLInputElement;
+        const aboutInput = e.currentTarget.elements[5] as HTMLInputElement;
+
+        const bodyResult = {
+            title: titleInput.value,
+            distance: distanceInput.value,
+            time: timeInput.value,
+            tags: tags,
+            likes: [],
+            gpx: "gpxInput.files",
+            images: "imagesInput.files",
+            about: aboutInput.value,
+        }
+
+        fetch("https://iaeround-backend.vercel.app/api/route", {
+            method: 'POST',
+            headers: {
+                'Access-Control-Allow-Origin':'*',
+                'Content-Type': 'text/plain'
+              },
+            body: "asd",
+        }).then(response => console.log(response));
+    }
+
     return(
         <FormContainer>
-            <Form>
+            <Form onSubmit={(e) => formSubmit(e)}>
                 <TopGrid>
                     <TopFlexbox>
                         <InputField title="Title"/>
@@ -40,7 +72,7 @@ function CreateRoute(props:{
                     </TopFlexbox>
 
                     <TopFlexbox>
-                        <InputField title="GPX" type="file"/>
+                        <InputField title="GPX" type="file" isGPX={true}/>
                         <InputField title="Images" type="file" imageFiles={true}/>
                     </TopFlexbox>
 
@@ -61,6 +93,7 @@ function CreateRoute(props:{
                 </TagsAboutContainer>
 
                 <InputField title="About" placeholder="Write something about this route" type="textfield"/>
+                <Button>Create Route</Button>
             </Form>
         </FormContainer>
     )

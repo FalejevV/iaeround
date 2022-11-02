@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { AlertText } from '../components/inputfield/InputField.styled';
 import { Container } from '../components/Styles.styled';
 
 export const FormContainer = styled(Container)`

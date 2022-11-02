@@ -77,8 +77,9 @@ export const ImageDisplayContainer = styled.div`
 export const ImageDisplay = styled.img`
     width:100px;
     height:100px;
-    background-color:red;
     object-fit: cover;
+    border:1px solid black;
+    border-radius: 5px;
 `
 
 export const TextField = styled.textarea`
