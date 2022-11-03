@@ -73,7 +73,7 @@ function FileField(props:{
     }, [file]);
 
     return(
-        <InputContainer displayImages={props.displayImages && file !== undefined}>
+        <InputContainer displayImages={props.displayImages && file !== undefined && alertText === ""}>
              <Label htmlFor={props.title.toLowerCase()}>{props.title}
                 {alertText !== "" && <AlertText>{alertText}</AlertText>}
                 <Input type="file" onChange={(e) => updateInputValue(e)} id={props.title.toLowerCase()} multiple={props.multipleFiles || false} hidden/>
