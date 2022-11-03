@@ -51,14 +51,19 @@ function CreateRoute(props:{
             about: aboutInput.value,
         }
 
-        fetch("https://iaeround-backend.vercel.app/api/route", {
+        const requestOptions = {
             method: 'POST',
-            headers: {
-                'Access-Control-Allow-Origin':'*',
-                'Content-Type': 'text/plain'
-              },
-            body: "asd",
-        }).then(response => console.log(response));
+            headers: { 
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Origin": "https://iaeround-backend.vercel.app",
+                "Access-Control-Allow-Methods": "POST"      
+        },
+            body: JSON.stringify({ bodyResult })
+        };
+        fetch('https://iaeround-backend.vercel.app/api/route', requestOptions)
+            .then(response => response.json())
+            .then(data => console.log(data));
     }
 
     return(
