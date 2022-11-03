@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { TagContainer } from "../tag/Tag.styled";
 
 export const CardContainer = styled.div`
     width:100%;
@@ -8,6 +9,10 @@ export const CardContainer = styled.div`
     display: flex;
     flex-direction: column;
     position:relative;
+    max-width:600px;
+    box-shadow: 0px 5px 5px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    overflow:hidden;
 `
 
 export const CardImage = styled.img`
@@ -18,6 +23,7 @@ export const CardImage = styled.img`
     background-color: #C5C5C5;
     text-decoration: none;
     display: block;
+
 `
 
 export const CardText = styled.p`

@@ -1,9 +1,19 @@
 import styled from 'styled-components';
-import { AlertText } from '../components/inputfield/InputField.styled';
-import { Container } from '../components/Styles.styled';
+import { Button, Container } from '../components/Styles.styled';
 
 export const FormContainer = styled(Container)`
-    width:650px;
+    max-width: 650px;
+    width:100%;
+
+    ${Button}{
+        display: block;
+        margin: 0 auto;
+        margin-top:15px;
+        max-width: 222px;
+        width:100%;
+        height:50px;
+        font-size: 18px;
+    }
 `
 
 export const Form = styled.form`
@@ -13,6 +23,14 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     gap:15px;
+
+    @media(max-width:850px){
+        padding-top: 120px;
+    }
+
+    @media(max-width:350px){
+        padding-top: 100px;
+    }
 `
 
 export const TopGrid = styled.div`
@@ -21,6 +39,10 @@ export const TopGrid = styled.div`
     gap:10px;
     column-gap:30px;
     padding-bottom: 15px;
+
+    @media(max-width: 850px){
+        grid-template-columns: 1fr;
+    }
 `
 
 export const TopFlexbox = styled.div`

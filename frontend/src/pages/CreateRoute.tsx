@@ -1,10 +1,13 @@
 import React, {FormEvent } from "react";
-import InputField from "../components/inputfield/InputField";
 import { Label } from "../components/inputfield/InputField.styled";
 import Tag from "../components/tag/Tag";
 import { Form, FormContainer, TagClickContainer, TagsAboutContainer, TagsContainer, TopFlexbox, TopGrid } from "./CreateRoute.styled";
 import LoadingAnimation from "../components/loadinganimation/LoadingAnimation";
 import { Button } from "../components/Styles.styled";
+import TextField from "../components/inputfield/TextField";
+import NumberField from "../components/inputfield/NumberField";
+import FileField from "../components/inputfield/FileField";
+import TextAreaField from "../components/inputfield/TextAreaField";
 
 function CreateRoute(props:{
     headerExtend:any
@@ -71,14 +74,14 @@ function CreateRoute(props:{
             <Form onSubmit={(e) => formSubmit(e)}>
                 <TopGrid>
                     <TopFlexbox>
-                        <InputField title="Title"/>
-                        <InputField placeholder="km" title="Distance" onlyNumbers={true} />
-                        <InputField placeholder="minutes" title="Time" onlyNumbers={true}/>
+                        <TextField title="Title"/>
+                        <NumberField title="Distance" placeholder="km"/>
+                        <NumberField title="Time" placeholder="minutes"/>
                     </TopFlexbox>
 
                     <TopFlexbox>
-                        <InputField title="GPX" type="file" isGPX={true}/>
-                        <InputField title="Images" type="file" imageFiles={true}/>
+                        <FileField title="GPX" checkForFileExtention="gpx"/>
+                        <FileField title="Images" imageFormat multipleFiles displayImages/>
                     </TopFlexbox>
 
                 </TopGrid>
@@ -97,7 +100,7 @@ function CreateRoute(props:{
                     </TagsContainer>
                 </TagsAboutContainer>
 
-                <InputField title="About" placeholder="Write something about this route" type="textfield"/>
+                <TextAreaField title="About" placeholder="Tell us more about this route :)" />
                 <Button>Create Route</Button>
             </Form>
         </FormContainer>

@@ -9,6 +9,10 @@ export interface IFilledOk{
     ok:boolean,
 }
 
+export interface IHidden{
+    
+}
+
 export interface ITag{
     clickable?: boolean,
     deletable?: boolean,

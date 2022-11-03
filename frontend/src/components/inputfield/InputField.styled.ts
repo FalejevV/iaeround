@@ -1,12 +1,16 @@
 import styled, { css } from "styled-components";
-import { IFilledOk } from "../../interfaces";
+import { IFilledOk, IHidden } from "../../interfaces";
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<{displayImages?:boolean}>`
     display: flex;
     flex-direction: column;
     gap:10px;
     width:100%;
     position:relative;
+
+    ${({displayImages}) => displayImages && css`
+        padding-bottom: 100px;
+    `}
 `
 
 export const Label = styled.label`
@@ -18,11 +22,15 @@ export const Label = styled.label`
     height:100%;
 `
 
-export const Input = styled.input`
+export const Input = styled.input<IHidden>`
     font-size: 18px;
     padding:10px 15px;
     border:2px solid #d6d6d6;
     border-radius: 5px;
+
+    ${({ hidden }) => hidden && css`
+        display:none;
+    `}
 `
 
 export const AlertText = styled.p`

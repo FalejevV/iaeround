@@ -10,6 +10,18 @@ export const CGrid = styled.div`
     overflow:hidden;
     transition: all 0.3s;
     position:relative;
+
+    @media(max-width: 1300px){
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        justify-content: center;
+        align-content: center;
+        gap:20px;
+    }
+
+    @media(max-width: 850px){
+        grid-template-columns: 1fr;
+    }
 `
 
 export const CardsLoadButton = styled.button`

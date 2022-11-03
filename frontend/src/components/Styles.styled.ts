@@ -52,8 +52,4 @@ export const TagContainer = styled.div`
     flex-wrap: wrap;
     gap:10px;
     padding:0px 15px;
-
-    @media(max-width:850px){
-        justify-content: center;
-    }
 `
