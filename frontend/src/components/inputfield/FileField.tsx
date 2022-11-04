@@ -25,7 +25,7 @@ function FileField(props:{
             let imagePreviewArray = []
             for (let i = 0; i < file.length; i++) {
                 let imageFile = file[i];
-                imagePreviewArray.push(<ImageDisplay src={URL.createObjectURL(imageFile)} alt="preview"/>)
+                imagePreviewArray.push(<ImageDisplay key={imageFile.name} src={URL.createObjectURL(imageFile)} alt="preview"/>)
               }
             return imagePreviewArray;
         }

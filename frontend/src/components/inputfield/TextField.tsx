@@ -5,6 +5,7 @@ function TextField(props:{
     title:string,
     placeholder?:string,
     forbiddenCharacters?:string[],
+    type?: string,
 }){
 
     const [inputValue,setInputValue] = React.useState<string>("");
@@ -37,7 +38,7 @@ function TextField(props:{
         <InputContainer>
             <Label>{props.title}</Label>
             {alertText !== "" && <AlertText>{alertText}</AlertText>}
-            <Input type="text" value={inputValue} onChange={(e) => updateValue(e)} placeholder={props.placeholder || ''} id={props.title.toLowerCase()} />
+            <Input type={props.type || "text"} value={inputValue} onChange={(e) => updateValue(e)} placeholder={props.placeholder || ''} id={props.title.toLowerCase()} />
         </InputContainer>
     )
 }

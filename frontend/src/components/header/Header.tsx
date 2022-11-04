@@ -11,6 +11,8 @@ import Tag from "../tag/Tag";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { nanoid } from "@reduxjs/toolkit";
+import React from "react";
+import LoginRegister from "../loginregister/LoginRegister";
 
 function Header(props:{
     displayFilters?: boolean,
@@ -19,7 +21,7 @@ function Header(props:{
 }){
 
     const tagsSelector = useAppSelector((state:RootState) => state.searchFilter.tags);
-
+    const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
     function displaySelectedTags(){
         if(tagsSelector.length > 0){
             let tagObjectArray = tagsSelector.map((tag:string) => <Tag key={nanoid()} deletable={true} title={tag} />);
@@ -34,7 +36,7 @@ function Header(props:{
                 <TopBarContainer>
                     <Logo srcSmall={LogoSmall} src={LogoImage} to="/" />
                     <SearchBar />
-                    <UserMenu profileImage={props.profileImage || ""} />
+                    {loggedIn ?  <UserMenu profileImage={props.profileImage || ""} /> : <LoginRegister />}
                 </TopBarContainer>
             </TopBar>
 
