@@ -3,8 +3,21 @@ import { Container } from "../components/Styles.styled";
 import { IToggle } from "../interfaces";
 
 export const SIContainer = styled(Container)`
+    padding: 30px;
     padding-top: 250px;
     max-width: 450px;
+
+    @media(max-width:850px){
+        padding-top: 200px;
+    }
+
+    @media(max-width:450px){
+        padding-top: 150px;
+    }
+
+    @media(max-width:350px){
+        padding-top: 115px;
+    }
 `
 
 export const Form = styled.form`
@@ -27,11 +40,27 @@ export const ArrowSVGLeft = styled.svg`
     fill: ${({ theme }) => theme.accentColor};
     left:20px;
     opacity:0;
+
+    @media(max-width:850px){
+        left:15px;
+    }
+
+    @media(max-width:450px){
+        left:10px;
+    }
 `
 
 export const ArrowSVGRight = styled(ArrowSVGLeft)`
     left:unset;
     right:20px;
+
+    @media(max-width:850px){
+        right:15px;
+    }
+
+    @media(max-width:450px){
+        right:10px;
+    }
 `
 
 export const SILogin = styled.button<IToggle>`
@@ -73,6 +102,19 @@ export const SILogin = styled.button<IToggle>`
             }
         }
     `}
+
+    @media(max-width:850px){
+        font-size:17px;
+        padding: 8px 18px;
+        width:150px;
+    }
+
+    @media(max-width:450px){
+        font-size:16px;
+        padding: 8px 18px;
+        width:130px;
+    }
+
 `
 
 export const SIRegister = styled(SILogin)`
