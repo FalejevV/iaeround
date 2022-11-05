@@ -1,22 +1,28 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const LRContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    flex:auto;
-    align-content: center;
+export const SVGKeyIcon = styled.svg`
+    width:42px;
+    height:40px;
+    background-color: transparent;
+    border-radius: 5px;
+    padding:8px;
+    padding-bottom: 9px;
+    border: 2px solid ${({ theme }) => theme.accentColor || "black"};
+    fill: ${({ theme }) => theme.accentColor || "black"};
+
+    display: none;
 `
 
-export const LRLink = styled(Link)`
-    font-size: 20px;
+export const LRLink = styled.button`
+    font-size: 18px;
     background-color: transparent;
     white-space: nowrap;
     border: 2px solid ${({ theme }) => theme.accentColor || "black"};
     color:${({ theme }) => theme.accentColor || "black"};
-    padding:10px 25px;
+    padding:8px 25px;
     border-radius:5px;
-
+    cursor: pointer;
     transition:all 0.3s;
 
     position: relative;
@@ -46,12 +52,27 @@ export const LRLink = styled(Link)`
     }
 
     @media(max-width:850px){
-        padding:8px 20px;
+        padding:6px 20px;
         font-size: 17px;
     }
 
-    @media(max-width:450px){
-        padding:10px 10px;
-        font-size: 14px;
+    @media(max-width:550px){
+        display: none;
+    }
+`
+
+
+
+export const LRContainer = styled(Link)`
+    display: flex;
+    justify-content: flex-end;
+    flex:auto;
+    align-content: center;
+    align-items: center;
+
+    @media(max-width:550px){
+        ${SVGKeyIcon}{
+            display: block;
+        }
     }
 `

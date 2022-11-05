@@ -57,10 +57,7 @@ function CreateRoute(props:{
         const requestOptions = {
             method: 'POST',
             headers: { 
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers": "*",
-                "Access-Control-Allow-Origin": "https://iaeround-backend.vercel.app",
-                "Access-Control-Allow-Methods": "POST"      
+                'Content-Type': 'application/json'
         },
             body: JSON.stringify({ bodyResult })
         };

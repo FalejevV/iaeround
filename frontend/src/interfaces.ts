@@ -40,3 +40,8 @@ export interface ISearchFilter{
     tags: string[],
     order: Order.NEW | Order.MOST_RATED,
 }
+
+export interface IJWT{
+    token:string,
+    refreshToken:string,
+}

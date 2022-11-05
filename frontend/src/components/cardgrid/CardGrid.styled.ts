@@ -10,7 +10,7 @@ export const CGrid = styled.div`
     overflow:hidden;
     transition: all 0.3s;
     position:relative;
-
+    padding-bottom: 15px;
     @media(max-width: 1300px){
         grid-template-columns: 1fr 1fr;
         justify-items: center;

@@ -134,3 +134,18 @@ export const RegisterInputsContainer = styled.div<IToggle>`
         height: 170px;
     `}
 `
+export const AlertContainer = styled.div`
+    border:2px solid #9d0000;
+    padding:10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    width:100%;
+    border-radius: 5px;
+
+`
+
+export const AlertField = styled.p`
+    font-size:15px;
+    color:#9d0000;
+`
