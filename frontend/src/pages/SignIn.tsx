@@ -43,9 +43,12 @@ function SignIn(props:{
         if(formData && submitted === true){
             if(formType === "Sign In"){
                 if(checkFields([formData.login, formData.password])){
-                    
-                    const requestOptions = {
+
+
+                    fetch('https://iaeround-backend.vercel.app/api/login', 
+                    {
                         method: 'POST',
+                        credentials: 'include',
                         headers: { 
                             'Content-Type': 'application/json'
                         },
@@ -53,10 +56,8 @@ function SignIn(props:{
                             login: formData.login,
                             password: formData.password,
                          })
-                    };
-
-
-                    fetch('https://iaeround-backend.vercel.app/api/login', requestOptions)
+                    }
+                    )
                     .then(response => response.json())
                     .then(data => console.log(data.rows));
                 }
