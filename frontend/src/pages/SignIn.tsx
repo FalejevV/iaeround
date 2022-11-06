@@ -43,7 +43,7 @@ function SignIn(props:{
         if(formData && submitted === true){
             if(formType === "Sign In"){
                 if(checkFields([formData.login, formData.password])){
-
+                    
                     const requestOptions = {
                         method: 'POST',
                         headers: { 
@@ -56,9 +56,9 @@ function SignIn(props:{
                     };
 
 
-                    fetch('https://iaeround-backend.vercel.app/api/login', requestOptions)
+                    fetch('https://iaeround-backend.vercel.app/api/auth/login', requestOptions)
                     .then(response => response.json())
-                    .then(data => console.log(data));
+                    .then(data => console.log(data.rows));
                 }
             }else if (formType === "Sign Up"){
                 if(checkFields([formData.login, formData.password,formData.repeat_password,formData.email])){
@@ -69,14 +69,15 @@ function SignIn(props:{
                         },
                         body: JSON.stringify({ 
                             login: formData.login,
+                            email:formData.email,
                             password: formData.password,
                          })
                     };
 
 
-                    fetch('https://iaeround-backend.vercel.app/api/register', requestOptions)
+                    fetch('https://iaeround-backend.vercel.app/api/auth/register', requestOptions)
                     .then(response => response.json())
-                    .then(data => console.log(data));
+                    .then(data => console.log(data.rows));
                 }
             }
         }
