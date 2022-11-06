@@ -56,7 +56,7 @@ function SignIn(props:{
                     };
 
 
-                    fetch('https://iaeround-backend.vercel.app/api/auth/login', requestOptions)
+                    fetch('https://iaeround-backend.vercel.app/api/login', requestOptions)
                     .then(response => response.json())
                     .then(data => console.log(data.rows));
                 }
@@ -75,7 +75,7 @@ function SignIn(props:{
                     };
 
 
-                    fetch('https://iaeround-backend.vercel.app/api/auth/register', requestOptions)
+                    fetch('https://iaeround-backend.vercel.app/api/register', requestOptions)
                     .then(response => response.json())
                     .then(data => console.log(data.rows));
                 }
