@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import styled  from "styled-components";
+import styled, { css }  from "styled-components";
+import { IToggle } from "../interfaces";
 
 export const Container = styled.div`
     max-width: 1440px;
@@ -52,4 +53,21 @@ export const TagContainer = styled.div`
     flex-wrap: wrap;
     gap:10px;
     padding:0px 15px;
+`
+
+export const TextMessage = styled.p<IToggle>`
+    width:100%;
+
+    padding:10px;
+    background-color: transparent;
+    font-size:16px;
+    border-radius:5px;
+
+    border:2px solid #279d00;
+    color: #279d00;
+
+    ${({ toggle }) => !toggle && css`
+        border:2px solid #9d0000;
+        color: #9d0000;
+    `}
 `

@@ -30,6 +30,7 @@ export const ButtonsContainer = styled.div`
     width:100%;
     align-content: center;
     justify-content: space-between;
+    margin-bottom: 20px;
 `
 
 

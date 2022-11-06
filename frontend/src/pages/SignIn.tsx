@@ -1,5 +1,6 @@
 import React, { FormEvent } from "react";
 import TextField from "../components/inputfield/TextField";
+import { TextMessage } from "../components/Styles.styled";
 import { Form, SILogin, SIContainer, ButtonsContainer, SIRegister, ArrowSVGLeft, ArrowSVGRight, RegisterInputsContainer, AlertField, AlertContainer } from "./SignIn.styled";
 
 
@@ -11,6 +12,7 @@ function SignIn(props:{
     const [submitted, setSubmitted] = React.useState<boolean>(false);
     const [formData, setFormData] = React.useState<{login:string,password:string,repeat_password:string, email:string}>();
     const [alertText ,setAlertText] = React.useState<string[]>([]);
+    const [statusMessage, setStatusMessage] = React.useState<{success:boolean, text:string}>();
 
     React.useEffect(() => {
         props.headerExtend(false);
@@ -43,9 +45,7 @@ function SignIn(props:{
         if(formData && submitted === true){
             if(formType === "Sign In"){
                 if(checkFields([formData.login, formData.password])){
-
-
-                    fetch('https://iaeround-backend.vercel.app/api/login', 
+                    fetch('https://iaeround-backend.vercel.app/api/auth/login', 
                     {
                         method: 'POST',
                         credentials: 'include',
@@ -55,11 +55,21 @@ function SignIn(props:{
                         body: JSON.stringify({ 
                             login: formData.login,
                             password: formData.password,
-                         })
+                         }),
                     }
                     )
                     .then(response => response.json())
-                    .then(data => console.log(data.rows));
+                    .then(data => {
+                        setSubmitted(false);
+                        if(data.status === "OK"){
+                            window.location.href = "http://localhost:3000/";
+                        }else{
+                            setStatusMessage({
+                                success:false,
+                                text: data.status
+                            });
+                        }
+                    });
                 }
             }else if (formType === "Sign Up"){
                 if(checkFields([formData.login, formData.password,formData.repeat_password,formData.email])){
@@ -76,13 +86,15 @@ function SignIn(props:{
                     };
 
 
-                    fetch('https://iaeround-backend.vercel.app/api/register', requestOptions)
+                    fetch('https://iaeround-backend.vercel.app/api/auth/register', requestOptions)
                     .then(response => response.json())
-                    .then(data => console.log(data.rows));
+                    .then(data => {
+                        setSubmitted(false);
+                        console.log(data);
+                    });
                 }
             }
         }
-        setSubmitted(false);
     },[submitted, formData, formType]);
 
     function toggleForm(name:string){
@@ -142,6 +154,11 @@ function SignIn(props:{
                         Sign Up
                     </SIRegister>
                 </ButtonsContainer>
+                {statusMessage && 
+                    <TextMessage toggle={statusMessage.success}>
+                        {statusMessage.text}
+                    </TextMessage>
+                }
             </Form>
         </SIContainer>
     )
