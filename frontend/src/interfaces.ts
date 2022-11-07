@@ -45,3 +45,10 @@ export interface IJWT{
     token:string,
     refreshToken:string,
 }
+
+export interface IUser{
+    login: string,
+    email:string,
+    about:string,
+    avatar:string,
+}

@@ -45,7 +45,7 @@ function SignIn(props:{
         if(formData && submitted === true){
             if(formType === "Sign In"){
                 if(checkFields([formData.login, formData.password])){
-                    fetch('https://iaeround-backend.vercel.app/api/auth/login', 
+                    fetch('http://localhost:5000/api/auth/login', 
                     {
                         method: 'POST',
                         credentials: 'include',
@@ -62,7 +62,13 @@ function SignIn(props:{
                     .then(data => {
                         setSubmitted(false);
                         if(data.status === "OK"){
-                            window.location.href = "http://localhost:3000/";
+                            setStatusMessage({
+                                success:true,
+                                text: "You have logged in!"
+                            })
+                            setTimeout(() => {
+                                window.location.href = "/";
+                            },1000);
                         }else{
                             setStatusMessage({
                                 success:false,

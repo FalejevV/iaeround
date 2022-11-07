@@ -8,11 +8,12 @@ import LogoSmall from "../../img/LogoSmall.svg";
 import UserMenu from "../usermenu/UserMenu";
 import { TagContainer } from "../Styles.styled";
 import Tag from "../tag/Tag";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { nanoid } from "@reduxjs/toolkit";
 import React from "react";
 import LoginRegister from "../loginregister/LoginRegister";
+import { setUser } from "../../features/UserData";
 
 function Header(props:{
     displayFilters?: boolean,
@@ -21,7 +22,8 @@ function Header(props:{
 }){
 
     const tagsSelector = useAppSelector((state:RootState) => state.searchFilter.tags);
-    const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
+    const userSelector = useAppSelector((state:RootState) => state.user);
+
     function displaySelectedTags(){
         if(tagsSelector.length > 0){
             let tagObjectArray = tagsSelector.map((tag:string) => <Tag key={nanoid()} deletable={true} title={tag} />);
@@ -29,6 +31,18 @@ function Header(props:{
         }
         return "";
     }
+    const dispatch = useAppDispatch();
+
+    React.useEffect(() => {
+        fetch('https://iaeround-backend.vercel.app/api/usertoken',{
+            method: "GET",
+            credentials: 'include',
+        })
+        .then(response => response.json())
+        .then(data => {
+            dispatch(setUser(data));
+        });
+    }, []);
 
     return(
         <HeaderContainer>
@@ -36,7 +50,7 @@ function Header(props:{
                 <TopBarContainer>
                     <Logo srcSmall={LogoSmall} src={LogoImage} to="/" />
                     <SearchBar />
-                    {loggedIn ?  <UserMenu profileImage={props.profileImage || ""} /> : <LoginRegister />}
+                    {userSelector.login !== "" ?  <UserMenu login={userSelector.login} profileImage={userSelector.avatar || ""} /> : <LoginRegister />}
                 </TopBarContainer>
             </TopBar>
 
