@@ -15,15 +15,16 @@ export const HeaderContainer = styled.div`
 export const TopBarContainer = styled(Container)`
     display: flex;
     align-items: center;
+    align-content: center;
     gap:80px;
-
+    height:90px;
+    padding:5px;
     @media(max-width:1100px){
         gap:30px;
     }
 
     @media(max-width:625px){
         gap:15px;
-        
         ${Button}{
             font-size: 0px;
             gap:0px;

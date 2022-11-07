@@ -3,14 +3,24 @@ import { DropdownContainer, DropdownDisabler, DropdownSVG, MenuContainer, PlusSV
 import ProfileImageSVG from "../../img/ProfileImage.svg";
 import React from "react";
 import { Link } from "react-router-dom";
+import { fetchAddress } from "../../DeveloperData";
+import { profileImageURLAvatar } from "../../UsefulFunctions";
 
 function UserMenu(props:{
-    profileImage?: string,
+    profileAvatar?: string,
     login?: string,
+    id?:string,
 })
 {
     const [dropdownOpened, setDropdownOpened] = React.useState(false);
+    const [avatar, setAvatar] = React.useState(ProfileImageSVG);
 
+    if(props.profileAvatar){
+        const url = profileImageURLAvatar(props.profileAvatar);
+        if(url !== "" && avatar !== url){
+            setAvatar(url);
+        }
+    }
 
     React.useEffect(() => {
         if(window.innerWidth <= 625){
@@ -19,13 +29,18 @@ function UserMenu(props:{
     }, [dropdownOpened]);
 
     function logout(){
-        fetch('https://iaeround-backend.vercel.app/api/auth/logout',{
+        fetch(fetchAddress + '/api/auth/logout',{
             method: "GET",
             credentials: 'include',
         });
         setTimeout(() => {
             document.location.reload();
         },1000);
+    }
+
+    function getAvatar():string{
+        console.log("GETAVATAR");
+        return "";
     }
     return(
         <MenuContainer>
@@ -45,14 +60,14 @@ function UserMenu(props:{
                     <path d="M9.50006 12.6667C9.31508 12.667 9.13582 12.6026 8.99339 12.4846L4.24339 8.52627C4.08172 8.39189 3.98005 8.19879 3.96075 7.98945C3.94145 7.78012 4.0061 7.57169 4.14047 7.41001C4.27485 7.24834 4.46795 7.14667 4.67728 7.12737C4.88662 7.10807 5.09505 7.17272 5.25672 7.3071L9.50006 10.8538L13.7434 7.43377C13.8244 7.368 13.9175 7.3189 14.0176 7.28926C14.1176 7.25963 14.2225 7.25005 14.3262 7.26109C14.4299 7.27213 14.5305 7.30355 14.622 7.35356C14.7135 7.40358 14.7943 7.47119 14.8596 7.55251C14.9321 7.63392 14.987 7.72941 15.0209 7.83302C15.0548 7.93663 15.0669 8.04612 15.0565 8.15462C15.0461 8.26313 15.0134 8.36832 14.9605 8.46361C14.9075 8.55889 14.8355 8.64221 14.7488 8.70835L9.99881 12.5321C9.85228 12.6315 9.67668 12.6789 9.50006 12.6667Z" />
                 </DropdownSVG>
                 <DropdownContainer toggle={dropdownOpened}>
-                    <LinkText to="/profile"> # {props.login}</LinkText>
-                    <LinkText to="/profile">Profile</LinkText>
+                    <LinkText to={`/profile/${props.id}`}> # {props.login}</LinkText>
+                    <LinkText to={`/profile/${props.id}`}>Profile</LinkText>
                     <LinkText to="/settings">Settings</LinkText>
                     <LinkText onClick={logout} to="">Sign Out</LinkText>
                 </DropdownContainer>
             </UserNameContainer>
             <DropdownDisabler toggle={dropdownOpened} onClick={() => setDropdownOpened(prevDropdownOpened => !prevDropdownOpened)} ></DropdownDisabler>
-            <ProfileImage src={props.profileImage !== "" ? props.profileImage : ProfileImageSVG } onClick={() => setDropdownOpened(prevDropdownOpened => !prevDropdownOpened)} />
+            <ProfileImage src={avatar} onClick={() => setDropdownOpened(prevDropdownOpened => !prevDropdownOpened)} />
         </MenuContainer>
     )
 }

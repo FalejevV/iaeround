@@ -14,6 +14,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import React from "react";
 import LoginRegister from "../loginregister/LoginRegister";
 import { setUser } from "../../features/UserData";
+import { fetchAddress } from "../../DeveloperData";
 
 function Header(props:{
     displayFilters?: boolean,
@@ -34,7 +35,7 @@ function Header(props:{
     const dispatch = useAppDispatch();
 
     React.useEffect(() => {
-        fetch('https://iaeround-backend.vercel.app/api/usertoken',{
+        fetch(fetchAddress + '/api/usertoken',{
             method: "GET",
             credentials: 'include',
         })
@@ -50,7 +51,7 @@ function Header(props:{
                 <TopBarContainer>
                     <Logo srcSmall={LogoSmall} src={LogoImage} to="/" />
                     <SearchBar />
-                    {userSelector.login !== "" ?  <UserMenu login={userSelector.login} profileImage={userSelector.avatar || ""} /> : <LoginRegister />}
+                    {userSelector.login !== "" ?  <UserMenu id={userSelector.id} login={userSelector.login} profileAvatar={userSelector.avatar} /> : <LoginRegister />}
                 </TopBarContainer>
             </TopBar>
 

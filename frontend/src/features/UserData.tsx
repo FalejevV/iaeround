@@ -5,7 +5,8 @@ let initialState:IUser = {
     login:"",
     email:"",
     avatar:"",
-    about:""
+    about:"",
+    id:""
 }   
 
 const UserSlice = createSlice({
@@ -17,6 +18,7 @@ const UserSlice = createSlice({
             state.email = action.payload.email;
             state.avatar = action.payload.avatar;
             state.about = action.payload.about;
+            state.id = action.payload.id;
         }
     }
 })

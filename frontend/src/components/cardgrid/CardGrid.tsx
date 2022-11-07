@@ -1,4 +1,5 @@
 import React from "react";
+import { fetchAddress } from "../../DeveloperData";
 import { IRoute } from "../../interfaces";
 import InfoCard from "../infocard/InfoCard";
 import LoadingAnimation from "../loadinganimation/LoadingAnimation";
@@ -17,14 +18,14 @@ function CardGrid(props:{
      
     React.useEffect(() => {
         console.log("fetch");
-        fetch(`https://iaeround-backend.vercel.app/api/routes/${cardsTotalCounter}`).then(res => res.json()).then(data => {
+        fetch(fetchAddress + `/api/routes/${cardsTotalCounter}`).then(res => res.json()).then(data => {
             setCardsFetch(data);
         })
     }, [cardsTotalCounter]);
 
     React.useEffect(() => {
         console.log('countFetch')
-        fetch(`https://iaeround-backend.vercel.app/api/routecount`).then(res => res.json()).then(data => {
+        fetch(fetchAddress + `/api/routecount`).then(res => res.json()).then(data => {
             setAllRouteCount(data[0].count);
         })
     },[]);

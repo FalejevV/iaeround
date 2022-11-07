@@ -2,7 +2,7 @@ import React, { FormEvent } from "react";
 import TextField from "../components/inputfield/TextField";
 import { TextMessage } from "../components/Styles.styled";
 import { Form, SILogin, SIContainer, ButtonsContainer, SIRegister, ArrowSVGLeft, ArrowSVGRight, RegisterInputsContainer, AlertField, AlertContainer } from "./SignIn.styled";
-
+import { fetchAddress } from "../DeveloperData";
 
 function SignIn(props:{
     headerExtend: any,
@@ -45,7 +45,7 @@ function SignIn(props:{
         if(formData && submitted === true){
             if(formType === "Sign In"){
                 if(checkFields([formData.login, formData.password])){
-                    fetch('http://localhost:5000/api/auth/login', 
+                    fetch(fetchAddress + '/api/auth/login', 
                     {
                         method: 'POST',
                         credentials: 'include',
@@ -92,7 +92,7 @@ function SignIn(props:{
                     };
 
 
-                    fetch('https://iaeround-backend.vercel.app/api/auth/register', requestOptions)
+                    fetch(fetchAddress + '/api/auth/register', requestOptions)
                     .then(response => response.json())
                     .then(data => {
                         setSubmitted(false);

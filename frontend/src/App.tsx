@@ -7,6 +7,7 @@ import GlobalStyleStyled from "./components/GlobalStyle.styled";
 import Header from "./components/header/Header";
 import CreateRoute from "./pages/CreateRoute";
 import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
 import SignIn from "./pages/SignIn";
 const theme={
     accentColor: '#3E6144',
@@ -30,6 +31,7 @@ function App(){
                 <Route path="/" element={<HomePage headerExtend={setHeaderExtend}/>} />
                 <Route path="/create" element={<CreateRoute headerExtend={setHeaderExtend}/>} />
                 <Route path="/sign-in" element={<SignIn headerExtend={setHeaderExtend} />} />
+                <Route path="/profile/:id" element={<ProfilePage headerExtend={setHeaderExtend} />} />
                 </Routes>
             </BrowserRouter>
             </Provider>

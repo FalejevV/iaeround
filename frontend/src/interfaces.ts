@@ -51,4 +51,5 @@ export interface IUser{
     email:string,
     about:string,
     avatar:string,
+    id:string,
 }
