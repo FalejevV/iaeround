@@ -7,7 +7,6 @@ export const LogoLink = styled(Link)`
     width:100%;
     max-width:200px;
     min-width:200px;
-    min-height:60px;
 
     @media(max-width:850px){
         min-width:130px;
@@ -18,12 +17,17 @@ export const LogoLink = styled(Link)`
         min-width:60px;
         max-width:60px;
     }
+
+    @media(max-width:350px){
+        min-width:40px;
+        max-width:40px;
+
+    }
 `
 
 export const LogoImage = styled.img`
     max-width:200px;
     min-width:200px;
-    min-height:60px;
     background-color: transparent;
 
     @media(max-width:850px){
@@ -34,5 +38,10 @@ export const LogoImage = styled.img`
     @media(max-width:625px){
         min-width:60px;
         max-width:60px;
+    }
+
+    @media(max-width:350px){
+        min-width:40px;
+        max-width:40px;
     }
 `

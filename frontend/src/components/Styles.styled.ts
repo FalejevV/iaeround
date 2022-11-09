@@ -4,14 +4,12 @@ import { IToggle } from "../interfaces";
 
 export const Container = styled.div`
     max-width: 1440px;
+    overflow: hidden;
     height:100%;
     width:100%;
     margin: 0 auto;
     padding:15px 20px;
     position:relative;
-    @media(max-width:350px){
-        padding:5px 10px;
-    }
 `
 
 export const Button = styled.button`

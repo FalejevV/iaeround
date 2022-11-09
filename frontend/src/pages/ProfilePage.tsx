@@ -1,10 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { fetchAddress } from "../DeveloperData";
-import { Avatar, ProfileContainer, ProfileInfo, Stats, StatText } from "./ProfilePage.styled";
+import { AboutText, Avatar, FlexPusher, ProfileContainer, ProfileInfo, Stats, StatText } from "./ProfilePage.styled";
 import LoadingAnimation from "../components/loadinganimation/LoadingAnimation";
 import { profileImageURLAvatar } from "../UsefulFunctions";
 import ProfileImageSVG from "../img/ProfileImage.svg";
+import CustomCardGrid from "../components/customcardgrid/CustomCardGrid";
 function ProfilePage(props:{
     headerExtend:any
 }){
@@ -14,7 +15,10 @@ function ProfilePage(props:{
     },[props]);
 
     const [profileID, setProfileID] = React.useState("");
-    const [profileData, setProfileData] = React.useState<{login:string,about:string,avatar:string,email:string,likes:number,posts:number}>();
+    const [profileData, setProfileData] = React.useState<{login:string,about:string,avatar:string,email:string}>();
+    const [likes, setLikes] = React.useState([]);
+    const [routes,setRoutes] = React.useState([]);
+
     const [avatar,setAvatar] = React.useState(ProfileImageSVG);
     const {id} = useParams();
     if(id && Number(id)){
@@ -32,11 +36,13 @@ function ProfilePage(props:{
                 credentials: 'include',
             }).then(res => res.json())
             .then(data => {
-                setProfileData(data);
+                console.log(data.likes);
+                setProfileData(data.user_data);
+                setLikes(data.likes);
+                setRoutes(data.routes);
             })
         }
     }, [profileID]);
-
 
     return(
         <ProfileContainer>
@@ -50,16 +56,19 @@ function ProfilePage(props:{
                         </StatText>
 
                         <StatText>
-                            {`Likes: ${profileData.likes}`} 
+                            {`Likes: ${likes.length || 0}`} 
                         </StatText>
 
                         <StatText>
-                            {`Posts: ${profileData.posts}`} 
+                            {`Posts: ${routes.length || 0}`} 
                         </StatText>
                     </Stats>
-                
+                    <FlexPusher />
+                    <AboutText>{profileData.about}</AboutText>
                 </ProfileInfo>
-                    
+
+            <CustomCardGrid first title={`${profileData.login} routes`} cards={routes} showAtStart={3} showMoreAmount={3} />
+            <CustomCardGrid title={`${profileData.login} likes`} cards={likes} showAtStart={3} showMoreAmount={3} />
             </>
             }
         </ProfileContainer>

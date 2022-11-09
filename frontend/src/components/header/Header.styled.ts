@@ -18,7 +18,8 @@ export const TopBarContainer = styled(Container)`
     align-content: center;
     gap:80px;
     height:90px;
-    padding:5px;
+    padding:5px 15px;
+    overflow: visible;
     @media(max-width:1100px){
         gap:30px;
     }

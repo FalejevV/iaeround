@@ -19,14 +19,14 @@ function CardGrid(props:{
     React.useEffect(() => {
         console.log("fetch");
         fetch(fetchAddress + `/api/routes/${cardsTotalCounter}`).then(res => res.json()).then(data => {
-            setCardsFetch(data);
+            setCardsFetch(data.data);
         })
     }, [cardsTotalCounter]);
 
     React.useEffect(() => {
         console.log('countFetch')
         fetch(fetchAddress + `/api/routecount`).then(res => res.json()).then(data => {
-            setAllRouteCount(data[0].count);
+            setAllRouteCount(data.data[0].count);
         })
     },[]);
 
@@ -44,7 +44,7 @@ function CardGrid(props:{
             <Container>
                 <CGrid>
                     {cardsFetch.map((fetchData: IRoute) => {
-                        return <InfoCard title={fetchData.title} distance={fetchData.distance} time={fetchData.time} tags={fetchData.tags} likes={fetchData.likes} key={fetchData.id} />;
+                        return <InfoCard data={fetchData} />;
                     })}
                 </CGrid>
                 { cardsFetch.length < cardsTotalCounter && <LoadingAnimation />}

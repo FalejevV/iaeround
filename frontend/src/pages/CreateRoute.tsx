@@ -8,6 +8,7 @@ import TextField from "../components/inputfield/TextField";
 import NumberField from "../components/inputfield/NumberField";
 import FileField from "../components/inputfield/FileField";
 import TextAreaField from "../components/inputfield/TextAreaField";
+import { fetchAddress } from "../DeveloperData";
 
 function CreateRoute(props:{
     headerExtend:any
@@ -20,7 +21,7 @@ function CreateRoute(props:{
     React.useEffect(() => {
         props.headerExtend(false);
         console.log("fetchTags");
-        fetch(`https://iaeround-backend.vercel.app/api/tags`).then(res => res.json()).then(data => setTagDatabase(data)).catch(error => {
+        fetch(fetchAddress + `/api/tags`).then(res => res.json()).then(data => setTagDatabase(data.data)).catch(error => {
             setConnectionError("Could not connect to database. Sorry :/");
         });
     },[props]);
@@ -61,7 +62,7 @@ function CreateRoute(props:{
         },
             body: JSON.stringify({ bodyResult })
         };
-        fetch('https://iaeround-backend.vercel.app/api/route', requestOptions)
+        fetch(fetchAddress + '/api/route', requestOptions)
             .then(response => response.json())
             .then(data => console.log(data));
     }

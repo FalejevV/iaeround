@@ -6,7 +6,6 @@ export const SIContainer = styled(Container)`
     padding: 30px;
     padding-top: 250px;
     max-width: 450px;
-
     @media(max-width:850px){
         padding-top: 200px;
     }

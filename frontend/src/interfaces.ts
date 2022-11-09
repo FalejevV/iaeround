@@ -53,3 +53,7 @@ export interface IUser{
     avatar:string,
     id:string,
 }
+
+export interface IAnimation{
+    line?: boolean
+}

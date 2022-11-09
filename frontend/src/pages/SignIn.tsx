@@ -3,6 +3,8 @@ import TextField from "../components/inputfield/TextField";
 import { TextMessage } from "../components/Styles.styled";
 import { Form, SILogin, SIContainer, ButtonsContainer, SIRegister, ArrowSVGLeft, ArrowSVGRight, RegisterInputsContainer, AlertField, AlertContainer } from "./SignIn.styled";
 import { fetchAddress } from "../DeveloperData";
+import LoadingAnimation from "../components/loadinganimation/LoadingAnimation";
+import LoadingLineAnimation from "../components/loadinglineanimation/LoadingLineAnimation";
 
 function SignIn(props:{
     headerExtend: any,
@@ -13,10 +15,11 @@ function SignIn(props:{
     const [formData, setFormData] = React.useState<{login:string,password:string,repeat_password:string, email:string}>();
     const [alertText ,setAlertText] = React.useState<string[]>([]);
     const [statusMessage, setStatusMessage] = React.useState<{success:boolean, text:string}>();
-
+    
     React.useEffect(() => {
         props.headerExtend(false);
     })
+
 
 
     
@@ -40,9 +43,9 @@ function SignIn(props:{
         setAlertText(alertArray);
         return dataFilled;
     }    
-
     React.useEffect(() => {
         if(formData && submitted === true){
+            setStatusMessage(undefined);
             if(formType === "Sign In"){
                 if(checkFields([formData.login, formData.password])){
                     fetch(fetchAddress + '/api/auth/login', 
@@ -55,12 +58,11 @@ function SignIn(props:{
                         body: JSON.stringify({ 
                             login: formData.login,
                             password: formData.password,
-                         }),
+                        }),
                     }
                     )
                     .then(response => response.json())
                     .then(data => {
-                        setSubmitted(false);
                         if(data.status === "OK"){
                             setStatusMessage({
                                 success:true,
@@ -95,13 +97,23 @@ function SignIn(props:{
                     fetch(fetchAddress + '/api/auth/register', requestOptions)
                     .then(response => response.json())
                     .then(data => {
-                        setSubmitted(false);
-                        console.log(data);
+                        if(data.login){
+                            setStatusMessage({
+                                success:true,
+                                text: `${data.login} has been registered!`
+                            });
+                        }else{
+                            setStatusMessage({
+                                success:false,
+                                text: data.status
+                            })
+                        }
                     });
                 }
             }
         }
-    },[submitted, formData, formType]);
+    setSubmitted(false);
+    },[formData]);
 
     function toggleForm(name:string){
         if(formType !== name){
@@ -110,7 +122,6 @@ function SignIn(props:{
         }else{
             setSubmitted(true);
         }
-        
     }
 
     function formSubmit(e:FormEvent<HTMLFormElement>){
@@ -148,16 +159,28 @@ function SignIn(props:{
                 }
                 <ButtonsContainer>
                     <SILogin onClick={() => toggleForm("Sign In")} toggle={formType === "Sign In"}>
-                        <ArrowSVGLeft viewBox="0 0 24 24" width="24" height="24">
-                            <path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/>
-                        </ArrowSVGLeft>
-                        Sign In
+                        {submitted ? 
+                            <LoadingLineAnimation />
+                            :
+                            <>
+                                <ArrowSVGLeft viewBox="0 0 24 24" width="24" height="24">
+                                    <path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/>
+                                </ArrowSVGLeft>
+                                Sign In
+                            </>
+                        }
                     </SILogin>
                     <SIRegister onClick={() => toggleForm("Sign Up")} toggle={formType === "Sign Up"}>
-                        <ArrowSVGRight viewBox="0 0 24 24" width="24" height="24">
-                            <path fill="none" d="M0 0h24v24H0z"/><path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/>
-                        </ArrowSVGRight>
-                        Sign Up
+                        {submitted ? 
+                                <LoadingLineAnimation />   
+                            :
+                            <>
+                                <ArrowSVGRight viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="none" d="M0 0h24v24H0z"/><path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/>
+                                </ArrowSVGRight>
+                                Sign Up
+                            </>
+                        }
                     </SIRegister>
                 </ButtonsContainer>
                 {statusMessage && 

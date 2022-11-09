@@ -6,7 +6,7 @@ import { Button, LinkText } from "../Styles.styled";
 
 export const MenuContainer = styled.div`
     width:100%;
-    height:100%;
+    height:fit-content;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -120,6 +120,12 @@ export const ProfileImage = styled.img`
         width:50px;
         height:50px;
     }
+
+    @media(max-width:350px){
+        width:40px;
+        height:40px;
+    }
+
 `
 
 export const UserNameContainer = styled.div`

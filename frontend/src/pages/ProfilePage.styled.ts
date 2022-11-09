@@ -44,3 +44,15 @@ export const Stats = styled.div`
     }
 `
 
+export const FlexPusher = styled.div`
+    flex:auto;
+`
+
+export const AboutText = styled.p`
+    font-style: italic;
+    font-size: 18px;
+    color:#3c3c3c;
+    height:100%;
+    padding-top: 27px;
+    padding-right: 30px;
+`
