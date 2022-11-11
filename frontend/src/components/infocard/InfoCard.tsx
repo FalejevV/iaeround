@@ -1,20 +1,35 @@
 
+import React from "react";
+import { routeImageURL } from "../../UsefulFunctions";
 import { TagContainer } from "../Styles.styled";
 import Tag from "../tag/Tag";
-import { CardContainer, CardImage, CardLikes, CardText, CardTitle, DistanceSVG, InfoObject, InfoObjectContainer, LikesSVG, LikesText, TimeSVG } from "./InfoCard.styled";
+import { CardContainer, CardImage, CardLikes, CardText, CardTitle, DistanceSVG, ImageContainer, ImageSlideHoverContainer, ImageSlideHoverIndicator, InfoObject, InfoObjectContainer, LikesSVG, LikesText, TimeSVG } from "./InfoCard.styled";
 
 function InfoCard(props:{
     data:{
+        id:string,
         title:string,
         distance:number,
         time:number,
         tags:string[],
-        likes:string[]
+        likes:string[],
+        images:string[]
     }
 }){
+    const [currentDisplayImage, setCurrentDisplayImage] = React.useState(props.data.images[0]);
+    function toggleImage(imageName:string){
+        if(currentDisplayImage !== imageName){
+            setCurrentDisplayImage(imageName);
+        }
+    }
     return(
-        <CardContainer>
-            <CardImage alt="info card" src="" />
+        <CardContainer onMouseLeave={() => toggleImage(props.data.images[0])}>
+            <ImageContainer>
+                <ImageSlideHoverContainer>
+                    {props.data.images.map((imageName:string) => <ImageSlideHoverIndicator toggle={currentDisplayImage === imageName} key={imageName} onMouseEnter={() => toggleImage(imageName)} ></ImageSlideHoverIndicator>)}
+                </ImageSlideHoverContainer>
+                <CardImage alt="info card" src={routeImageURL(props.data.id, currentDisplayImage) || ""} /> 
+            </ImageContainer>
             <InfoObjectContainer>
                 <CardTitle>{props.data.title}</CardTitle>
                 <InfoObject>

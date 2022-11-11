@@ -6,3 +6,7 @@ export function profileImageURLAvatar(avatar:string):string{
     }
     return `${fetchAddress}/storage/avatar/${avatar}`
 }
+
+export function routeImageURL(routeId:string, imageName:string){
+    return `${fetchAddress}/storage/img/${routeId}/${imageName}`;
+}
