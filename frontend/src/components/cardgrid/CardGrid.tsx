@@ -43,8 +43,8 @@ function CardGrid(props:{
     return(
             <Container>
                 <CGrid>
-                    {cardsFetch.map((fetchData: IRoute) => {
-                        return <InfoCard data={fetchData} />;
+                    {cardsFetch.map((fetchData: IRoute, index) => {
+                        return <InfoCard key={index} data={fetchData} />;
                     })}
                 </CGrid>
                 { cardsFetch.length < cardsTotalCounter && <LoadingAnimation />}

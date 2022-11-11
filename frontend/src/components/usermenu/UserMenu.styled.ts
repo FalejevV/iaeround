@@ -31,6 +31,18 @@ export const PlusSVG = styled.svg`
     fill:white;
 `
 
+export const LogoutButton = styled.button`
+    color:black;
+    font-size: 16px;
+    transition: all 0.3s;
+    background-color:transparent;
+    text-align:left;
+    cursor: pointer;
+    &:hover{
+        opacity: 0.6;
+    }
+`
+
 export const DropdownContainer = styled.div<IToggle>`
     position:absolute;
     width:120px;
@@ -74,6 +86,10 @@ export const DropdownContainer = styled.div<IToggle>`
         padding-top: 80px;
 
         ${LinkText}{
+            font-size: 24px;
+        }
+
+        ${LogoutButton}{
             font-size: 24px;
         }
     }

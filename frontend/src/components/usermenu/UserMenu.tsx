@@ -1,5 +1,5 @@
 import { Button, LinkText } from "../Styles.styled";
-import { DropdownContainer, DropdownDisabler, DropdownSVG, MenuContainer, PlusSVG, ProfileImage, UserNameContainer, UserNameText } from "./UserMenu.styled";
+import { DropdownContainer, DropdownDisabler, DropdownSVG, LogoutButton, MenuContainer, PlusSVG, ProfileImage, UserNameContainer, UserNameText } from "./UserMenu.styled";
 import ProfileImageSVG from "../../img/ProfileImage.svg";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -63,7 +63,7 @@ function UserMenu(props:{
                     <LinkText to={`/profile/${props.id}`}> # {props.login}</LinkText>
                     <LinkText to={`/profile/${props.id}`}>Profile</LinkText>
                     <LinkText to="/settings">Settings</LinkText>
-                    <LinkText onClick={logout} to="">Sign Out</LinkText>
+                    <LogoutButton onClick={logout}>Sign Out</LogoutButton>
                 </DropdownContainer>
             </UserNameContainer>
             <DropdownDisabler toggle={dropdownOpened} onClick={() => setDropdownOpened(prevDropdownOpened => !prevDropdownOpened)} ></DropdownDisabler>

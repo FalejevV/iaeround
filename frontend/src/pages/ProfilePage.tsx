@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { fetchAddress } from "../DeveloperData";
-import { AboutText, Avatar, FlexPusher, ProfileContainer, ProfileInfo, Stats, StatText } from "./ProfilePage.styled";
+import { AboutText, Avatar, AvatarStatsContainer, EditProfileLink, EditProfileSVG, EditProfileText, FlexPusher, ProfileContainer, ProfileInfo, SpacerLine, Stats, StatText } from "./ProfilePage.styled";
 import LoadingAnimation from "../components/loadinganimation/LoadingAnimation";
 import { profileImageURLAvatar } from "../UsefulFunctions";
 import ProfileImageSVG from "../img/ProfileImage.svg";
@@ -18,6 +18,7 @@ function ProfilePage(props:{
     const [profileData, setProfileData] = React.useState<{login:string,about:string,avatar:string,email:string}>();
     const [likes, setLikes] = React.useState([]);
     const [routes,setRoutes] = React.useState([]);
+    const [isProfileOwner, setIsProfileOwner] = React.useState<boolean>(false);
 
     const [avatar,setAvatar] = React.useState(ProfileImageSVG);
     const {id} = useParams();
@@ -36,10 +37,10 @@ function ProfilePage(props:{
                 credentials: 'include',
             }).then(res => res.json())
             .then(data => {
-                console.log(data.likes);
                 setProfileData(data.user_data);
                 setLikes(data.likes);
                 setRoutes(data.routes);
+                setIsProfileOwner(data.myLogin === data.user_data.login);
             })
         }
     }, [profileID]);
@@ -49,26 +50,41 @@ function ProfilePage(props:{
             {!profileData ? <LoadingAnimation /> :
             <>
                 <ProfileInfo>
-                    <Avatar src={avatar} />
-                    <Stats>
-                        <StatText>
-                            {profileData.login} 
-                        </StatText>
 
-                        <StatText>
-                            {`Likes: ${likes.length || 0}`} 
-                        </StatText>
+                    <AvatarStatsContainer>
 
-                        <StatText>
-                            {`Posts: ${routes.length || 0}`} 
-                        </StatText>
-                    </Stats>
-                    <FlexPusher />
+                        <Avatar src={avatar} />
+                        <Stats>
+
+                            {isProfileOwner && 
+                            <EditProfileLink to="/settings" >
+                                <EditProfileSVG viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="none" d="M0 0h24v24H0z"/><path d="M12 1l9.5 5.5v11L12 23l-9.5-5.5v-11L12 1zm0 2.311L4.5 7.653v8.694l7.5 4.342 7.5-4.342V7.653L12 3.311zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                                </EditProfileSVG>
+                                <EditProfileText>
+                                    Edit profile
+                                </EditProfileText>
+                            </EditProfileLink>}
+
+
+                            <StatText>
+                                {profileData.login} 
+                            </StatText>
+
+                            <StatText>
+                                {`Likes: ${likes.length || 0}`} 
+                            </StatText>
+
+                            <StatText>
+                                {`Posts: ${routes.length || 0}`} 
+                            </StatText>
+                        </Stats>
+                    </AvatarStatsContainer>
                     <AboutText>{profileData.about}</AboutText>
                 </ProfileInfo>
-
-            <CustomCardGrid first title={`${profileData.login} routes`} cards={routes} showAtStart={3} showMoreAmount={3} />
-            <CustomCardGrid title={`${profileData.login} likes`} cards={likes} showAtStart={3} showMoreAmount={3} />
+                <SpacerLine />
+                <CustomCardGrid first title={`${profileData.login} routes`} cards={routes} showAtStart={3} showMoreAmount={3} />
+                <CustomCardGrid title={`${profileData.login} likes`} cards={likes} showAtStart={3} showMoreAmount={3} />
             </>
             }
         </ProfileContainer>

@@ -6,9 +6,10 @@ export const CustomCardGridContainer = styled(Container)<{first:boolean}>`
     width:100%;
     display: flex;
     flex-direction: column;
-
+    padding:0px;
+    padding-bottom:30px;
     ${({ first }) => first && `
-        padding-top: 100px;
+        padding-top: 50px;
     `}
 `
 
@@ -30,4 +31,9 @@ export const NothingText = styled.p`
     color:#676767;
     opacity: 0.4;
     font-style: italic;
+
+    @media(max-width:950px){
+        font-size: 20px;
+        white-space: wrap;
+    }
 `
