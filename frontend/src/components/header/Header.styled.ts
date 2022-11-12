@@ -1,15 +1,29 @@
 import styled, { css } from "styled-components";
-import { ISearchView } from "../../interfaces";
+import { ISearchView, IToggle } from "../../interfaces";
 import { Button, Container } from "../Styles.styled";
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.div<IToggle>`
     width:100vw;
     background-color: white;
     box-shadow: 0 0 15px 1px #c0c0c0;
     height:fit-content;
     margin-bottom: 40px;
     position:fixed;
-    z-index: 10;
+    z-index: 1000;
+    transition: all 0.3s;
+    top:0px;
+    ${({ toggle }) => toggle && css`
+        transition: all 0.3s;
+        top:-90px;
+    `}
+
+    &:hover{
+        top:0px;
+    }
+
+    @media(max-width:350px){
+        top:-70px;
+    }
 `
 
 export const TopBarContainer = styled(Container)`

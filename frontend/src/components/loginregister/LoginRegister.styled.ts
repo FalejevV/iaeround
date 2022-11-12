@@ -14,7 +14,7 @@ export const SVGKeyIcon = styled.svg`
     display: none;
 `
 
-export const LRLink = styled.button`
+export const LRButton = styled.button`
     font-size: 18px;
     background-color: transparent;
     white-space: nowrap;
@@ -61,15 +61,16 @@ export const LRLink = styled.button`
     }
 `
 
-
-
-export const LRContainer = styled(Link)`
+export const LRContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     flex:auto;
     align-content: center;
     align-items: center;
 
+`
+
+export const LRLink = styled(Link)`
     @media(max-width:550px){
         ${SVGKeyIcon}{
             display: block;

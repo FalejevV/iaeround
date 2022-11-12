@@ -36,12 +36,13 @@ export const ImageSlideHoverContainer = styled.div`
 export const CardContainer = styled.div`
     width:100%;
     height:405px;
-    background-color: #D9D9D9;
+    background-color: white;
     cursor:pointer;
     display: flex;
     flex-direction: column;
     position:relative;
     max-width:600px;
+    border:3px solid ${({ theme }) => theme.accentColor};
     box-shadow: 0px 5px 5px rgba(0,0,0,0.1);
     border-radius: 5px;
     overflow:hidden;
@@ -54,8 +55,10 @@ export const CardContainer = styled.div`
     }
 `
 
+
 export const CardImage = styled.img`
     width:100%;
+    max-width:100%;
     height:100%;
     min-height: 200px;
     object-fit: cover;
@@ -63,6 +66,7 @@ export const CardImage = styled.img`
     text-decoration: none;
     display: block;
     position: relative;
+    
 `
 
 
@@ -83,16 +87,17 @@ export const ImageSlideHoverIndicator = styled.div<IToggle>`
         position:absolute;
         top:0px;
         left:0px;
-        width:100%;
+        width:calc(100% - 4px);
         height:5px;
         background-color: ${({ theme }) => theme.accentColor};
         border-radius:0px 0px 5px 5px;
-        border:4px solid black;
+        border:2px solid ${({ theme }) => theme.accentColor};
         border-top:0px;
         z-index:200;
 
         ${({ toggle }) => toggle && css`
-            background-color: white;
+            background-color: ${({ theme }) => theme.accentColor};
+            filter: brightness(1.5);
         `}
     }
 `
@@ -131,6 +136,14 @@ export const InfoObject = styled.div`
     opacity:0.7;
     position:relative;
     z-index: 100;
+`
+
+
+export const GPXIndicator = styled.p`
+    padding:5px;
+    color:${({ theme }) => theme.accentColor};
+    opacity: 0.7;
+    padding-bottom:6px;
 `
 
 

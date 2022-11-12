@@ -24,7 +24,8 @@ function Header(props:{
 
     const tagsSelector = useAppSelector((state:RootState) => state.searchFilter.tags);
     const userSelector = useAppSelector((state:RootState) => state.user);
-
+    const [pageOffset, setPageOffset] = React.useState(10000);
+    const [headerHidden, setHeaderHidden] = React.useState(false);
     function displaySelectedTags(){
         if(tagsSelector.length > 0){
             let tagObjectArray = tagsSelector.map((tag:string) => <Tag key={nanoid()} deletable={true} title={tag} />);
@@ -43,10 +44,28 @@ function Header(props:{
         .then(data => {
             dispatch(setUser(data));
         });
-    }, []);
+    }, [dispatch]);
 
+    React.useEffect(() => {
+        document.addEventListener('scroll', (e) => {
+            if(pageOffset < window.pageYOffset && window.pageYOffset > 120 && props.extended){
+                setHeaderHidden(true);
+                setPageOffset(window.pageYOffset);
+            }else{
+                setHeaderHidden(false);
+                setPageOffset(window.pageYOffset);
+            }
+        });
+
+        return(() =>{
+            document.removeEventListener('scroll', (e) => {
+                setPageOffset(window.pageYOffset);
+            });
+        })
+    }, [pageOffset]);
+    
     return(
-        <HeaderContainer>
+        <HeaderContainer toggle={headerHidden}>
             <TopBar extended={props.extended || false}>
                 <TopBarContainer>
                     <Logo srcSmall={LogoSmall} src={LogoImage} to="/" />

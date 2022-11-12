@@ -1,9 +1,10 @@
 
 import React from "react";
-import { routeImageURL } from "../../UsefulFunctions";
+import { errorImageReplace, routeImageURL } from "../../UsefulFunctions";
 import { TagContainer } from "../Styles.styled";
 import Tag from "../tag/Tag";
-import { CardContainer, CardImage, CardLikes, CardText, CardTitle, DistanceSVG, ImageContainer, ImageSlideHoverContainer, ImageSlideHoverIndicator, InfoObject, InfoObjectContainer, LikesSVG, LikesText, TimeSVG } from "./InfoCard.styled";
+import { CardContainer, CardImage, CardLikes, CardText, CardTitle, DistanceSVG, GPXIndicator, ImageContainer, ImageSlideHoverContainer, ImageSlideHoverIndicator, InfoObject, InfoObjectContainer, LikesSVG, LikesText, TimeSVG } from "./InfoCard.styled";
+
 
 function InfoCard(props:{
     data:{
@@ -13,7 +14,8 @@ function InfoCard(props:{
         time:number,
         tags:string[],
         likes:string[],
-        images:string[]
+        images:string[],
+        gpx:string,
     }
 }){
     const [currentDisplayImage, setCurrentDisplayImage] = React.useState(props.data.images[0]);
@@ -22,13 +24,14 @@ function InfoCard(props:{
             setCurrentDisplayImage(imageName);
         }
     }
+
     return(
         <CardContainer onMouseLeave={() => toggleImage(props.data.images[0])}>
             <ImageContainer>
                 <ImageSlideHoverContainer>
                     {props.data.images.map((imageName:string) => <ImageSlideHoverIndicator toggle={currentDisplayImage === imageName} key={imageName} onMouseEnter={() => toggleImage(imageName)} ></ImageSlideHoverIndicator>)}
                 </ImageSlideHoverContainer>
-                <CardImage alt="info card" src={routeImageURL(props.data.id, currentDisplayImage) || ""} /> 
+                <CardImage alt="info card" src={routeImageURL(props.data.id, currentDisplayImage) || ""} onError={(imageElement) => errorImageReplace(imageElement) }/> 
             </ImageContainer>
             <InfoObjectContainer>
                 <CardTitle>{props.data.title}</CardTitle>
@@ -49,12 +52,15 @@ function InfoCard(props:{
                 {props.data.tags.map((tag:string) => <Tag key={tag} title={tag} clickable={true}/>)}
             </TagContainer>
             <CardLikes>
+                {props.data.gpx.trim() !== "" && <GPXIndicator>GPX</GPXIndicator>}
+                
                 <LikesSVG viewBox="0 0 24 24" width="24" height="24">
                     <path fill="none" d="M0 0H24V24H0z"/><path d="M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z"/>
                 </LikesSVG>
                 <LikesText>
                     {props.data.likes.length}
                 </LikesText>
+                
             </CardLikes>
         </CardContainer>
     )
