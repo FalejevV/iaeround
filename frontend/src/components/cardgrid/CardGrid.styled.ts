@@ -36,3 +36,11 @@ export const CardsLoadButton = styled.button`
     margin: 0 auto;
     margin-top: 30px;
 `
+
+export const NotFoundText = styled.p`
+    width:100%;
+    padding-top:20px;
+    text-align: center;
+    color:${({theme }) => theme.accentColor};
+    font-size: 20px;
+`

@@ -24,7 +24,7 @@ function Header(props:{
 
     const tagsSelector = useAppSelector((state:RootState) => state.searchFilter.tags);
     const userSelector = useAppSelector((state:RootState) => state.user);
-    const [pageOffset, setPageOffset] = React.useState(10000);
+    const [pageOffset, setPageOffset] = React.useState(window.pageYOffset);
     const [headerHidden, setHeaderHidden] = React.useState(false);
     function displaySelectedTags(){
         if(tagsSelector.length > 0){
@@ -46,13 +46,25 @@ function Header(props:{
         });
     }, [dispatch]);
 
+
+
     React.useEffect(() => {
         document.addEventListener('scroll', (e) => {
-            if(pageOffset < window.pageYOffset && window.pageYOffset > 120 && props.extended){
-                setHeaderHidden(true);
-                setPageOffset(window.pageYOffset);
+            if(pageOffset < window.pageYOffset && window.pageYOffset > 100 && props.extended && pageOffset > 50){
+                if(!headerHidden && pageOffset + 200 < window.pageYOffset){
+                    setHeaderHidden(true);
+                    setPageOffset(window.pageYOffset);
+                }
+                return;
+            }
+
+            if(pageOffset > window.pageYOffset && props.extended){
+                if(headerHidden && (pageOffset - 200) > window.pageYOffset){
+                    setHeaderHidden(false);
+                    setPageOffset(window.pageYOffset);
+                }
+                return;
             }else{
-                setHeaderHidden(false);
                 setPageOffset(window.pageYOffset);
             }
         });
@@ -62,7 +74,7 @@ function Header(props:{
                 setPageOffset(window.pageYOffset);
             });
         })
-    }, [pageOffset]);
+    }, [headerHidden,pageOffset,props.extended]);
     
     return(
         <HeaderContainer toggle={headerHidden}>

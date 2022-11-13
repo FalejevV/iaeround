@@ -1,7 +1,8 @@
 import React, { FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import { setSearchInput } from "../../features/SearchFilter";
+import { Order } from "../../enums";
+import { setOrder, setSearchInput } from "../../features/SearchFilter";
 import { CloseSVG, Container, SearchInput, SearchSVG } from "./SearchBar.styled";
 
 function SearchBar(){
@@ -12,6 +13,7 @@ function SearchBar(){
     function formSubmit(e:FormEvent){
         e.preventDefault();
         dispatch(setSearchInput(text));
+        dispatch(setOrder(Order.NONE));
         setText("");
     }
 

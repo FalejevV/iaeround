@@ -38,7 +38,8 @@ export interface IRoute{
 export interface ISearchFilter{
     searchInput: string,
     tags: string[],
-    order: Order.NEW | Order.MOST_RATED,
+    order: Order,
+    routesLimit:number,
 }
 
 export interface IJWT{

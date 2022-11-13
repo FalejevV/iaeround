@@ -1,10 +1,12 @@
 import React from "react";
+import { useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
 import { fetchAddress } from "../../DeveloperData";
 import { IRoute } from "../../interfaces";
 import InfoCard from "../infocard/InfoCard";
 import LoadingAnimation from "../loadinganimation/LoadingAnimation";
 import { Container } from "../Styles.styled";
-import { CardsLoadButton, CGrid } from "./CardGrid.styled";
+import { CardsLoadButton, CGrid, NotFoundText } from "./CardGrid.styled";
 
 
 function CardGrid(props:{
@@ -14,21 +16,34 @@ function CardGrid(props:{
 }){
     const [cardsTotalCounter, setCardsTotalCounter] = React.useState<number>(props.cardsAtStart || 6);
     const [cardsFetch, setCardsFetch] = React.useState([]);
-    const [allRouteCount, setAllRouteCount] = React.useState(0);
-     
-    React.useEffect(() => {
-        console.log("fetch");
-        fetch(fetchAddress + `/api/routes/${cardsTotalCounter}`).then(res => res.json()).then(data => {
-            setCardsFetch(data.data);
-        })
-    }, [cardsTotalCounter]);
+    const [allRouteCount, setAllRouteCount] = React.useState<number>(-1);
+    const sortSelector = useAppSelector((state:RootState) => state.searchFilter.order);
+    const searchSelector= useAppSelector((state:RootState) => state.searchFilter.searchInput);
 
     React.useEffect(() => {
-        console.log('countFetch')
-        fetch(fetchAddress + `/api/routecount`).then(res => res.json()).then(data => {
-            setAllRouteCount(data.data[0].count);
-        })
-    },[]);
+        if(searchSelector.trim() !== ""){
+            fetch(fetchAddress + `/api/routes/${cardsTotalCounter}/0/${searchSelector}`).then(res => res.json()).then(data => {
+                setCardsFetch(data.data);
+            });
+        }else{
+            fetch(fetchAddress + `/api/routes/${cardsTotalCounter}/${sortSelector}`).then(res => res.json()).then(data => {
+                setCardsFetch(data.data);
+            });
+        }
+        
+    }, [cardsTotalCounter,sortSelector,searchSelector]);
+
+    React.useEffect(() => {
+        if(searchSelector.trim() !== ""){
+            fetch(fetchAddress + `/api/routecountsearch/${searchSelector}`).then(res => res.json()).then(data => {
+                setAllRouteCount(data.data[0].count);
+            })
+        }else{
+            fetch(fetchAddress + `/api/routecount`).then(res => res.json()).then(data => {
+                setAllRouteCount(data.data[0].count);
+            })
+        }
+    },[searchSelector]);
 
     function loadMore(){
         if(allRouteCount > 0){
@@ -39,7 +54,7 @@ function CardGrid(props:{
             }
         }
     }
-    
+    console.log(cardsFetch.length, allRouteCount);
     return(
             <Container>
                 <CGrid>
@@ -47,7 +62,8 @@ function CardGrid(props:{
                         return <InfoCard key={index} data={fetchData} />;
                     })}
                 </CGrid>
-                { cardsFetch.length < cardsTotalCounter && <LoadingAnimation />}
+                { cardsFetch.length < cardsTotalCounter && Number(allRouteCount) !== cardsFetch.length  && <LoadingAnimation />}
+                { Number(allRouteCount) === 0 && <NotFoundText>{`'${searchSelector}' routes not found`}</NotFoundText>}
                 { cardsFetch.length === cardsTotalCounter && cardsFetch.length > 0 && <CardsLoadButton onClick={loadMore}>Load More</CardsLoadButton>}
             </Container>
     )

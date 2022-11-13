@@ -6,6 +6,7 @@ const initialState:ISearchFilter = {
     searchInput: "",
     tags: [],
     order: Order.NEW,
+    routesLimit : 6,
 }
 
 const searchFilterSlice = createSlice({
@@ -25,9 +26,12 @@ const searchFilterSlice = createSlice({
         },
         setOrder(state:ISearchFilter, action:PayloadAction<Order>){
             state.order = action.payload;
+        },
+        setRoutesLimit(state:ISearchFilter, action:PayloadAction<number>){
+            state.routesLimit = action.payload;
         }
     }
 });
 
-export const {setSearchInput, addTag, removeTag, setOrder} = searchFilterSlice.actions;
+export const {setSearchInput, addTag, removeTag, setOrder, setRoutesLimit} = searchFilterSlice.actions;
 export default searchFilterSlice.reducer;

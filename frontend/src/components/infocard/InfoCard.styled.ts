@@ -46,6 +46,7 @@ export const CardContainer = styled.div`
     box-shadow: 0px 5px 5px rgba(0,0,0,0.1);
     border-radius: 5px;
     overflow:hidden;
+    animation ${fadeInAnimation} 0.3s;
     
     &:hover{
         ${ImageSlideHoverContainer}{
@@ -66,7 +67,6 @@ export const CardImage = styled.img`
     text-decoration: none;
     display: block;
     position: relative;
-    
 `
 
 
