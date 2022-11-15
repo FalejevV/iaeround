@@ -24,6 +24,9 @@ const searchFilterSlice = createSlice({
         removeTag(state:ISearchFilter, action:PayloadAction<string>){
             state.tags = state.tags.filter((tag:string) => tag !== action.payload);
         },
+        clearTags(state:ISearchFilter, action:PayloadAction){
+            state.tags = [];
+        },
         setOrder(state:ISearchFilter, action:PayloadAction<Order>){
             state.order = action.payload;
         },
@@ -33,5 +36,5 @@ const searchFilterSlice = createSlice({
     }
 });
 
-export const {setSearchInput, addTag, removeTag, setOrder, setRoutesLimit} = searchFilterSlice.actions;
+export const {setSearchInput, addTag, removeTag, clearTags, setOrder, setRoutesLimit} = searchFilterSlice.actions;
 export default searchFilterSlice.reducer;

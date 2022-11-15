@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../../app/hooks";
 import { Order } from "../../enums";
-import { setOrder, setSearchInput } from "../../features/SearchFilter";
+import { clearTags, setOrder, setSearchInput } from "../../features/SearchFilter";
 import { LogoImage, LogoLink } from "./Logo.styled";
 
 function Logo(props:{
@@ -14,6 +14,7 @@ function Logo(props:{
     function dropSearches(){
         dispatch(setSearchInput(""));
         dispatch(setOrder(Order.NEW));
+        dispatch(clearTags());
     }
     return(
         <LogoLink to={props.to} onClick={dropSearches}>

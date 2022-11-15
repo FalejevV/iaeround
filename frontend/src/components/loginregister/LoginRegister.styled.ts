@@ -10,7 +10,6 @@ export const SVGKeyIcon = styled.svg`
     padding-bottom: 9px;
     border: 2px solid ${({ theme }) => theme.accentColor || "black"};
     fill: ${({ theme }) => theme.accentColor || "black"};
-
     display: none;
 `
 
@@ -24,7 +23,7 @@ export const LRButton = styled.button`
     border-radius:5px;
     cursor: pointer;
     transition:all 0.3s;
-
+    margin-right: 5px;
     position: relative;
     overflow: hidden;
     &:after{

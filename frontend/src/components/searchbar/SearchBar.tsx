@@ -13,7 +13,6 @@ function SearchBar(){
     function formSubmit(e:FormEvent){
         e.preventDefault();
         dispatch(setSearchInput(text));
-        dispatch(setOrder(Order.NONE));
         setText("");
     }
 

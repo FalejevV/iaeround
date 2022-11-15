@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { Order } from "../../enums";
 import { SortArrowSVG, SortButton, SortButtonsContainer, SortText } from "./SortButtons.styled";
-import { setOrder, setSearchInput } from "../../features/SearchFilter";
+import { setOrder } from "../../features/SearchFilter";
 
 function SortButtons(){
     
@@ -13,23 +13,18 @@ function SortButtons(){
     function switchOrder(newOrderValue:Order){
         if(orderSelector !== newOrderValue){
             dispatch(setOrder(newOrderValue));
-            dispatch(setSearchInput(""));
         }else{
             if(orderSelector === Order.NEW){
                 dispatch(setOrder(Order.OLD));
-                dispatch(setSearchInput(""));
             }
             if(orderSelector === Order.MOST_RATED){
                 dispatch(setOrder(Order.LEAST_RATED));
-                dispatch(setSearchInput(""));
             }
             if(orderSelector === Order.LONG_DISTANCE){
                 dispatch(setOrder(Order.SHORT_DISTANCE));
-                dispatch(setSearchInput(""));
             }
             if(orderSelector === Order.LONG_TIME){
                 dispatch(setOrder(Order.SHORT_TIME));
-                dispatch(setSearchInput(""));
             }
         }
     }
