@@ -4,7 +4,7 @@ import { errorImageReplace, routeImageURL } from "../../UsefulFunctions";
 import { TagContainer } from "../Styles.styled";
 import Tag from "../tag/Tag";
 import { CardContainer, CardImage, CardLikes, CardText, CardTitle, DistanceSVG, GPXIndicator, ImageContainer, ImageSlideHoverContainer, ImageSlideHoverIndicator, InfoObject, InfoObjectContainer, LikesSVG, LikesText, TimeSVG } from "./InfoCard.styled";
-
+import { useNavigate } from "react-router-dom";
 
 function InfoCard(props:{
     data:{
@@ -18,6 +18,7 @@ function InfoCard(props:{
         gpx:string,
     }
 }){
+    const navigate = useNavigate();
     const [currentDisplayImage, setCurrentDisplayImage] = React.useState(props.data.images[0]);
     function toggleImage(imageName:string){
         if(currentDisplayImage !== imageName){
@@ -25,8 +26,18 @@ function InfoCard(props:{
         }
     }
 
+    function processCardClick(e:React.MouseEvent){
+        const target:HTMLDivElement = e.target as HTMLDivElement;
+        console.log(target);
+        const targetClass:string = target.className;
+        console.log(target.localName)
+        if(!targetClass.includes("tag") && target.localName !== "b"){
+            navigate(`/route/${props.data.id || "0"}`);
+        }
+    }
+
     return(
-        <CardContainer onMouseLeave={() => toggleImage(props.data.images[0])}>
+        <CardContainer onClick={(e) => processCardClick(e)} onMouseLeave={() => toggleImage(props.data.images[0])}>
             <ImageContainer>
                 <ImageSlideHoverContainer>
                     {props.data.images.map((imageName:string) => <ImageSlideHoverIndicator toggle={currentDisplayImage === imageName} key={imageName} onMouseEnter={() => toggleImage(imageName)} ></ImageSlideHoverIndicator>)}

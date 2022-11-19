@@ -24,7 +24,7 @@ function Tag(props:{
     }
 
     return(
-        <TagContainer onClick={() => doTagActions(props.title)} chosen={props.chosen} clickable={props.clickable || false} deletable={props.deletable || false}>
+        <TagContainer className="tag" onClick={() => doTagActions(props.title)} chosen={props.chosen} clickable={props.clickable || false} deletable={props.deletable || false}>
             <TagText>
                 {props.title}
             </TagText>

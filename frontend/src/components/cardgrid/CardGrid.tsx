@@ -78,13 +78,13 @@ function CardGrid(props:{
         }
         if(sortSelector === 0){
             setFilteredCards(filteredArray.sort((a:any,b:any) => {
-                return b.id - a.id;
+                return a.id - b.id;
             }));
         }
 
         if(sortSelector === 1){
             setFilteredCards(filteredArray.sort((a:any,b:any) => {
-                return a.id - b.id;
+                return b.id - a.id;
             }));
         }
 

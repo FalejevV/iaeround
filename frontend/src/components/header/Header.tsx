@@ -26,6 +26,7 @@ function Header(props:{
     const userSelector = useAppSelector((state:RootState) => state.user);
     const [pageOffset, setPageOffset] = React.useState(window.pageYOffset);
     const [headerHidden, setHeaderHidden] = React.useState(false);
+
     function displaySelectedTags(){
         if(tagsSelector.length > 0){
             let tagObjectArray = tagsSelector.map((tag:string) => <Tag key={nanoid()} deletable={true} title={tag} />);
@@ -46,34 +47,36 @@ function Header(props:{
         });
     }, [dispatch]);
 
-
-
     React.useEffect(() => {
-        document.addEventListener('scroll', (e) => {
-            if(pageOffset < window.pageYOffset && window.pageYOffset > 100 && props.extended && pageOffset > 50){
-                if(!headerHidden && pageOffset + 200 < window.pageYOffset){
-                    setHeaderHidden(true);
+        if(props.extended){
+            document.addEventListener('scroll', (e) => {
+                if(pageOffset < window.pageYOffset && window.pageYOffset > 100 && props.extended && pageOffset > 50){
+                    if(!headerHidden && pageOffset + 200 < window.pageYOffset){
+                        setHeaderHidden(true);
+                        setPageOffset(window.pageYOffset);
+                    }
+                    return;
+                }
+    
+                if(pageOffset > window.pageYOffset && props.extended){
+                    if(headerHidden && (pageOffset - 200) > window.pageYOffset){
+                        setHeaderHidden(false);
+                        setPageOffset(window.pageYOffset);
+                    }
+                    return;
+                }else{
                     setPageOffset(window.pageYOffset);
                 }
-                return;
-            }
-
-            if(pageOffset > window.pageYOffset && props.extended){
-                if(headerHidden && (pageOffset - 200) > window.pageYOffset){
-                    setHeaderHidden(false);
-                    setPageOffset(window.pageYOffset);
-                }
-                return;
-            }else{
-                setPageOffset(window.pageYOffset);
-            }
-        });
-
-        return(() =>{
-            document.removeEventListener('scroll', (e) => {
-                setPageOffset(window.pageYOffset);
             });
-        })
+    
+            return(() =>{
+                document.removeEventListener('scroll', (e) => {
+                    setPageOffset(window.pageYOffset);
+                });
+            })
+        }else{
+            setHeaderHidden(false);
+        }
     }, [headerHidden,pageOffset,props.extended]);
     
     return(

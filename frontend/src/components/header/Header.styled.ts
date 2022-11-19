@@ -12,17 +12,19 @@ export const HeaderContainer = styled.div<IToggle>`
     z-index: 1000;
     transition: all 0.3s;
     top:0px;
+
     ${({ toggle }) => toggle && css`
         transition: all 0.3s;
         top:-90px;
+
+        
+        @media(max-width:350px){
+            top:-70px;
+        }
     `}
 
     &:hover{
         top:0px;
-    }
-
-    @media(max-width:350px){
-        top:-70px;
     }
 `
 

@@ -10,7 +10,7 @@ export const TagCloseSVG = styled.svg`
 `
 
 
-export const TagContainer = styled.div<ITag>`
+export const TagContainer = styled.b<ITag>`
     padding: 5px 10px;
     background-color: transparent;
     display: flex;
@@ -19,6 +19,7 @@ export const TagContainer = styled.div<ITag>`
     gap:5px;
     border:1px solid #5f5f5f;
     user-select: none;
+    font-weight: 400;
     ${({ clickable }) => clickable && css`
         cursor: pointer;
     `}
@@ -49,9 +50,10 @@ export const TagContainer = styled.div<ITag>`
     cursor: pointer;
 `
 
-export const TagText = styled.p`
+export const TagText = styled.b`
     text-align: center;
     font-size: 14px;
     white-space: nowrap;
+    font-weight: 400;
 `
 

@@ -33,6 +33,7 @@ export interface IRoute{
     tags: string[],
     gpx: string,
     images: string[],
+    about:string
 }
 
 export interface ISearchFilter{
