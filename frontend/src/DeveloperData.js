@@ -1,1 +1,1 @@
-export const fetchAddress = "https://iaeround.xyz"
+export const fetchAddress = "https://iaeround-backend.vercel.app"
