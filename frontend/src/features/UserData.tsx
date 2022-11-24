@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { fetchAddress } from "../DeveloperData";
 import { IUser } from "../interfaces";
 
 let initialState:IUser = {
@@ -6,7 +7,8 @@ let initialState:IUser = {
     email:"",
     avatar:"",
     about:"",
-    id:""
+    id:"",
+    name: ""
 }   
 
 const UserSlice = createSlice({
@@ -19,9 +21,30 @@ const UserSlice = createSlice({
             state.avatar = action.payload.avatar;
             state.about = action.payload.about;
             state.id = action.payload.id;
+            state.name = action.payload.name;
+        },
+        dropUser(state:IUser, action:PayloadAction<string>){
+            state.login = "";
+            state.email = "";
+            state.avatar = "";
+            state.about = "";
+            state.id = "";
+            state.name = "";
+        },
+        updateUserData(state:IUser, action:PayloadAction<string>){
+            if(state.id !== ""){
+                fetch(fetchAddress + '/api/usertoken',{
+                    method: "GET",
+                    credentials: 'include',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    state = data;
+                });
+            }   
         }
     }
 })
 
-export const {setUser } = UserSlice.actions;
+export const {setUser, updateUserData, dropUser } = UserSlice.actions;
 export default UserSlice.reducer;

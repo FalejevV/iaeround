@@ -8,6 +8,7 @@ import Header from "./components/header/Header";
 import CreateRoute from "./pages/CreateRoute";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
+import ProfileSettings from "./pages/ProfileSettings";
 import RoutePage from "./pages/RoutePage";
 import SignIn from "./pages/SignIn";
 const theme={
@@ -34,6 +35,7 @@ function App(){
                 <Route path="/sign-in" element={<SignIn headerExtend={setHeaderExtend} />} />
                 <Route path="/profile/:id" element={<ProfilePage headerExtend={setHeaderExtend} />} />
                 <Route path="/route/:id" element={<RoutePage headerExtend={setHeaderExtend} />} />
+                <Route path="/settings" element={<ProfileSettings headerExtend={setHeaderExtend} />} />
                 </Routes>
             </BrowserRouter>
             </Provider>

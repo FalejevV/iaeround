@@ -5,7 +5,7 @@ export function profileImageURLAvatar(avatar:string):string{
     if(avatar.trim() === ""){
         return "";
     }
-    return `${fetchAddress}/storage/avatar/${avatar}`
+    return `${fetchAddress}/storage/avatar/${avatar}.jpeg`
 }
 
 export function routeImageURL(routeId:string, imageName:string){

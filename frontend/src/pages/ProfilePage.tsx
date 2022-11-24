@@ -15,7 +15,7 @@ function ProfilePage(props:{
     },[props]);
 
     const [profileID, setProfileID] = React.useState("");
-    const [profileData, setProfileData] = React.useState<{login:string,about:string,avatar:string,email:string}>();
+    const [profileData, setProfileData] = React.useState<{id:string,login:string,about:string,avatar:string,email:string,name:string}>();
     const [likes, setLikes] = React.useState([]);
     const [routes,setRoutes] = React.useState([]);
     const [isProfileOwner, setIsProfileOwner] = React.useState<boolean>(false);
@@ -53,7 +53,7 @@ function ProfilePage(props:{
 
                     <AvatarStatsContainer>
 
-                        <Avatar src={avatar} />
+                        <Avatar src={profileData.id !== "" ? profileImageURLAvatar(profileData.id) : avatar} />
                         <Stats>
 
                             {isProfileOwner && 
@@ -68,7 +68,7 @@ function ProfilePage(props:{
 
 
                             <StatText>
-                                {profileData.login} 
+                                {profileData.name} 
                             </StatText>
 
                             <StatText>
@@ -83,8 +83,8 @@ function ProfilePage(props:{
                     <AboutText>{profileData.about}</AboutText>
                 </ProfileInfo>
                 <SpacerLine />
-                <CustomCardGrid first title={`${profileData.login} routes`} cards={routes} showAtStart={3} showMoreAmount={3} />
-                <CustomCardGrid title={`${profileData.login} likes`} cards={likes} showAtStart={3} showMoreAmount={3} />
+                <CustomCardGrid first title={`${profileData.name} routes`} cards={routes} showAtStart={3} showMoreAmount={3} />
+                <CustomCardGrid title={`${profileData.name} likes`} cards={likes} showAtStart={3} showMoreAmount={3} />
             </>
             }
         </ProfileContainer>

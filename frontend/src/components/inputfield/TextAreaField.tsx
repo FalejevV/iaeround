@@ -5,9 +5,10 @@ function TextAreaField(props:{
     title:string,
     placeholder?:string,
     forbiddenCharacters?:string[],
+    value?:string
 }){
 
-    const [inputValue,setInputValue] = React.useState<string>("");
+    const [inputValue,setInputValue] = React.useState<string>(props.value || "");
     const [alertText, setAlertText] = React.useState<string>("");
 
     function updateValue(e:ChangeEvent<HTMLTextAreaElement>){

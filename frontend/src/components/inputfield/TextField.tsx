@@ -6,9 +6,9 @@ function TextField(props:{
     placeholder?:string,
     forbiddenCharacters?:string[],
     type?: string,
+    value?: string,
 }){
-
-    const [inputValue,setInputValue] = React.useState<string>("");
+    const [inputValue,setInputValue] = React.useState<string>(props.value || "");
     const [alertText, setAlertText] = React.useState<string>("");
 
     function updateValue(e:ChangeEvent<HTMLInputElement>){

@@ -42,8 +42,9 @@ export const Avatar = styled.img`
     width: 150px;
     height:150px;
     border-radius:50%;
-    padding:25px;
-    background-color: rgba(0,0,0,0.1);
+    padding:15px;
+    background-color: white;
+    border:4px solid rgba(0,0,0,0.1);
 
 `
 

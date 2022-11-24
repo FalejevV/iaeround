@@ -14,7 +14,7 @@ export const InputContainer = styled.div<{displayImages?:boolean}>`
 `
 
 export const Label = styled.label`
-    font-size: 20px;
+    font-size: 18px;
     display: flex;
     flex-direction: column;
     gap:5px;

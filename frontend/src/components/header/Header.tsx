@@ -13,7 +13,7 @@ import { RootState } from "../../app/store";
 import { nanoid } from "@reduxjs/toolkit";
 import React from "react";
 import LoginRegister from "../loginregister/LoginRegister";
-import { setUser } from "../../features/UserData";
+import { dropUser, setUser } from "../../features/UserData";
 import { fetchAddress } from "../../DeveloperData";
 
 function Header(props:{
@@ -37,13 +37,22 @@ function Header(props:{
     const dispatch = useAppDispatch();
 
     React.useEffect(() => {
-        fetch(fetchAddress + '/api/usertoken',{
+            fetch(fetchAddress + '/api/usertoken',{
             method: "GET",
             credentials: 'include',
         })
         .then(response => response.json())
         .then(data => {
-            dispatch(setUser(data));
+            if(data !== undefined){
+                if(data !== undefined){
+                    if(!data.status){
+                        dispatch(setUser(data));
+                    }else{
+                        dispatch(dropUser(""));
+                    }
+                }
+            }
+
         });
     }, [dispatch]);
 
@@ -85,7 +94,7 @@ function Header(props:{
                 <TopBarContainer>
                     <Logo srcSmall={LogoSmall} src={LogoImage} to="/" />
                     <SearchBar />
-                    {userSelector.login !== "" ?  <UserMenu id={userSelector.id} login={userSelector.login} profileAvatar={userSelector.avatar} /> : <LoginRegister />}
+                    {userSelector.login !== "" ?  <UserMenu id={userSelector.id} name={userSelector.name} profileAvatar={userSelector.avatar} /> : <LoginRegister />}
                 </TopBarContainer>
             </TopBar>
 

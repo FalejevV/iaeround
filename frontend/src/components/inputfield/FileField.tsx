@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { AlertText, FileInput, FileSvg, ImageDisplay, ImageDisplayContainer, Input, InputContainer, Label } from "./InputField.styled";
+import { AlertText, FileSvg, ImageDisplay, ImageDisplayContainer, Input, InputContainer, Label } from "./InputField.styled";
 
 function FileField(props:{
     title:string,
@@ -8,6 +8,8 @@ function FileField(props:{
     displayImages?:boolean,
     checkForFileExtention?: string,
     imageFormat?: boolean,
+    onChange?:Function,
+    fileSize?: number,
 }){
 
     const [file,setFile] = React.useState<FileList>();
@@ -34,6 +36,7 @@ function FileField(props:{
 
     React.useEffect(() => {
         if(file){
+            let maxFileSize = (props.fileSize || 5000000);
             let totalFileSize = 0;
             for (let i = 0; i < file.length; i++) {
                 let imageFile = file[i];
@@ -54,8 +57,8 @@ function FileField(props:{
             }
             if(totalFileSize === -1){
                 setAlertText("Wrong image format");
-            }else if(totalFileSize > 5000000){
-                setAlertText("Size should be less than 5MB");
+            }else if(totalFileSize > maxFileSize){
+                setAlertText(`Size should be less than ${maxFileSize/1000}KB`);
             }else{
                 setAlertText("")
             }
@@ -70,13 +73,13 @@ function FileField(props:{
                 }
             }
         }
-    }, [file]);
+    }, [file, props]);
 
     return(
         <InputContainer displayImages={props.displayImages && file !== undefined && alertText === ""}>
              <Label htmlFor={props.title.toLowerCase()}>{props.title}
                 {alertText !== "" && <AlertText>{alertText}</AlertText>}
-                <Input type="file" onChange={(e) => updateInputValue(e)} id={props.title.toLowerCase()} multiple={props.multipleFiles || false} hidden/>
+                <Input type="file" onChange={(e) => {updateInputValue(e); if(props.onChange){props.onChange(e)}}} id={props.title.toLowerCase()} multiple={props.multipleFiles || false} hidden/>
                 <FileSvg ok={alertText === ""} toggle={file != null} viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 19h18v2H3v-2zM13 5.828V17h-2V5.828L4.929 11.9l-1.414-1.414L12 2l8.485 8.485-1.414 1.414L13 5.83z"/></FileSvg>
             </Label>
 

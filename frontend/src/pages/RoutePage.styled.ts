@@ -1,7 +1,35 @@
-import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
+import styled, { css, keyframes } from "styled-components";
 import { Button, TagContainer } from "../components/Styles.styled";
 import { IToggle } from "../interfaces";
 import { ProfileContainer } from "./ProfilePage.styled";
+
+const fadeIn = keyframes`
+    0%{
+        opacity:1;
+    }
+    50%{
+        opacity:0;
+    }
+    100%{
+        opacity:0;
+        pointer-events: none;
+    }
+`
+
+export const LoadFader = styled.div`
+    position:absolute;
+    width:100vw;
+    height:100vh;
+    background-color:white;
+    left:0px;
+    top:0px;
+    z-index:500;
+    opacity:1;
+
+    animation:${fadeIn} 0.3s forwards;
+    animation-delay:0.3s;
+`
 
 export const RoutePageContainer = styled(ProfileContainer)`
     
@@ -16,6 +44,7 @@ export const RouteInfoContainer = styled.div`
 `
 
 export const RouteRightSideInfo = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     gap:15px;
@@ -101,6 +130,7 @@ export const LikeContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    position: relative;
     cursor:pointer;
     gap:5px;
 `
@@ -124,4 +154,40 @@ export const LikeText = styled.p`
     font-size: 17px;
     color:${({ theme }) => theme.accentColor};
     font-weight: bold;
+`
+
+export const LikeErrorText = styled.p`
+    text-align: center;
+    position: absolute;
+    font-size: 16px;
+    color:#aa0000;
+    top:40px;
+    transform: translateX(-20%);
+    pointer-events:none;
+    white-space: nowrap;
+`
+
+export const EditRouteButton = styled(Link)`
+    position: absolute;
+    font-size: 15px;
+    padding:3px 15px;
+    top:0px;
+    right:0px;
+    border-radius:5px;
+    background-color:transparent;
+    color:${({ theme }) => theme.accentColor};
+    border:2px solid ${({ theme }) => theme.accentColor};
+
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover{
+        background-color: rgba(0,100,0,0.1)
+    }
+`
+
+export const SimmilarRoutesContainer = styled.div`
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    padding-top:100px;
 `

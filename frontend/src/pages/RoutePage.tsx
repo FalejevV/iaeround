@@ -1,11 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import CustomCardGrid from "../components/customcardgrid/CustomCardGrid";
 import GallertSlider from "../components/galleryslider/GallerySlider";
 import { CardText, DistanceSVG, InfoObject, TimeSVG } from "../components/infocard/InfoCard.styled";
 import Tag from "../components/tag/Tag";
 import { fetchAddress } from "../DeveloperData";
 import { IRoute, IUser } from "../interfaces";
-import { ButtonTipContainer, DownloadButton, DownloadLikeContainer, DownloadSVG, GPXTip, InfoIconsContainer, LikeContainer, LikeFill, LikeSVG, LikeText, RouteAboutText, RouteInfoContainer, RoutePageContainer, RouteRightSideInfo, RouteTags, RouteTitle } from "./RoutePage.styled";
+import { ButtonTipContainer, DownloadButton, DownloadLikeContainer, DownloadSVG, EditRouteButton, GPXTip, InfoIconsContainer, LikeContainer, LikeErrorText, LikeFill, LikeSVG, LikeText, LoadFader, RouteAboutText, RouteInfoContainer, RoutePageContainer, RouteRightSideInfo, RouteTags, RouteTitle, SimmilarRoutesContainer } from "./RoutePage.styled";
 
 function RoutePage(props:{
     headerExtend:any
@@ -15,7 +16,9 @@ function RoutePage(props:{
     const [routeInfo, setRouteInfo] = React.useState<IRoute>();
     const [userInfo, setUserInfo] = React.useState<IUser>();
     const [timeDebounce, setTimeDebounce] = React.useState(new Date().getTime());
-
+    const [likeError, setLikeError] = React.useState("");
+    const [allRoutesFetch, setAllRoutesFetch] = React.useState<IRoute[]>();
+    const [simmilarRoutes, setSimmilarRoutes] = React.useState<IRoute[]>();
 
 
     React.useEffect(() => {
@@ -34,7 +37,48 @@ function RoutePage(props:{
             credentials: 'include',
         }).then(res => res.json())
           .then(data => setUserInfo(data));
+
+          fetch(fetchAddress + '/api/route',{
+            method: "GET",
+            credentials: 'include',
+        }).then(res => res.json())
+          .then(data => setAllRoutesFetch(data.data));
     }
+
+    React.useEffect(() => {
+        let simmilarRoutesArray:IRoute[] = [];
+        if(allRoutesFetch && allRoutesFetch.length > 0 && routeInfo){
+            allRoutesFetch.forEach((route:IRoute) => {
+                if(route.tags.every((tag) => {
+                    return(routeInfo.tags.includes(tag));
+                })){
+                    if(route.id !== routeInfo.id && !simmilarRoutesArray.includes(route)){
+                        simmilarRoutesArray.push(route);
+                    }
+                }
+            })
+            
+            allRoutesFetch.forEach((route:IRoute) => {
+                if(route.tags.includes(routeInfo.tags[0])){
+                    if(route.id !== routeInfo.id && !simmilarRoutesArray.includes(route)){
+                        simmilarRoutesArray.push(route);
+                    }
+                }
+            });
+
+
+            // check if distance is simmilar to originam route; Remove it? Add time similarity check?
+            simmilarRoutesArray = simmilarRoutesArray.filter((route:IRoute) => {
+                if(route.distance >= routeInfo.distance - 10 && route.distance <= routeInfo.distance + 10){
+                    return true;
+                }
+                return false;
+            });
+            
+            setSimmilarRoutes(simmilarRoutesArray);
+        }
+
+    }, [allRoutesFetch,routeInfo]);
 
     React.useEffect(() => {
        fetchData();
@@ -42,7 +86,7 @@ function RoutePage(props:{
 
     function toggleLike(){
         if(userInfo){
-            if((new Date().getTime() - timeDebounce) > 4000){
+            if((new Date().getTime() - timeDebounce) > 3000){
                 fetch(fetchAddress + '/api/routelike', 
                 {
                     method: 'POST',
@@ -61,19 +105,23 @@ function RoutePage(props:{
                     }
                 })
                 setTimeDebounce(new Date().getTime());
+                setLikeError("");
             }else{
-                console.log("NOT TOO FAST");
+                setLikeError("Please wait couple seconds to like");
             }
         }else{
-            console.log("YOU ARE NOT LOGGED IN");
+            setLikeError("Please sign in to like");
         }
     }
-
+    console.log(simmilarRoutes);
     return(
         <RoutePageContainer>
+            <LoadFader></LoadFader>
             <RouteInfoContainer>
                 <GallertSlider routeId={routeInfo?.id || "0"} images={routeInfo?.images || []} />
+
                 <RouteRightSideInfo>
+                    {routeInfo?.owner_id === userInfo?.id && <EditRouteButton to={`/edit/${routeInfo?.id}`}>Edit route</EditRouteButton>}
                     <RouteTitle>
                         {routeInfo?.title}
                     </RouteTitle>
@@ -98,19 +146,21 @@ function RoutePage(props:{
                             {routeInfo?.tags.map((tag,index) => <Tag title={tag} key={index} clickable={false} deletable={false} />)}
                         </RouteTags>
                         <DownloadLikeContainer>
-                            <ButtonTipContainer>  
+                            <ButtonTipContainer>
+
+                                {routeInfo?.gpx.trim() !== "" && 
                                 <DownloadButton>
                                     <DownloadSVG viewBox="0 0 24 24" width="24" height="24">
                                         <path fill="none" d="M0 0h24v24H0z"/><path d="M3 19h18v2H3v-2zm10-5.828L19.071 7.1l1.414 1.414L12 17 3.515 8.515 4.929 7.1 11 13.17V2h2v11.172z"/>
                                     </DownloadSVG>
                                     Download GPX
                                 </DownloadButton>
+                                }
 
                                 <GPXTip viewBox="0 0 192 512">
                                     <path d="M144 80c0 26.5-21.5 48-48 48s-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z"/>
                                 </GPXTip> 
                             </ButtonTipContainer>
-
                             <LikeContainer onClick={toggleLike}>
                                 <LikeSVG viewBox="0 0 24 24" width="24" height="24">
                                     <LikeFill toggle={routeInfo?.likes.includes(userInfo?.id || "asd") || false} d="M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z"/>
@@ -119,10 +169,19 @@ function RoutePage(props:{
                                 <LikeText>
                                     {routeInfo?.likes.length }
                                 </LikeText>
+                                {likeError.trim() !== "" && 
+                                    <LikeErrorText>
+                                        {likeError}
+                                    </LikeErrorText>
+                                }
                             </LikeContainer>
                         </DownloadLikeContainer>
                 </RouteRightSideInfo>
             </RouteInfoContainer>
+
+            <SimmilarRoutesContainer>
+                <CustomCardGrid title="Routes you may also like..." cards={simmilarRoutes || []} showAtStart={3} showMoreAmount={6} />
+            </SimmilarRoutesContainer>
         </RoutePageContainer>
     )
 }

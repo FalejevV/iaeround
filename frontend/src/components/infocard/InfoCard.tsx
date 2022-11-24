@@ -28,7 +28,6 @@ function InfoCard(props:{
 
     function processCardClick(e:React.MouseEvent){
         const target:HTMLDivElement = e.target as HTMLDivElement;
-        console.log(target);
         const targetClass:string = target.className;
         console.log(target.localName)
         if(!targetClass.includes("tag") && target.localName !== "b"){

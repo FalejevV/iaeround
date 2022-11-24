@@ -33,7 +33,8 @@ export interface IRoute{
     tags: string[],
     gpx: string,
     images: string[],
-    about:string
+    about:string,
+    owner_id: string,
 }
 
 export interface ISearchFilter{
@@ -54,6 +55,7 @@ export interface IUser{
     about:string,
     avatar:string,
     id:string,
+    name:string
 }
 
 export interface IAnimation{
