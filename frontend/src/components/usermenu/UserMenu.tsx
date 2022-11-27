@@ -19,7 +19,7 @@ function UserMenu(props:{
     const dispatch = useAppDispatch();
     
     if(props.profileAvatar){
-        const url = profileImageURLAvatar(props.id || "0");
+        const url = profileImageURLAvatar((props.profileAvatar|| ""), (props.id || "")) || "";
         if(url !== "" && avatar !== url){
             setAvatar(url);
         }

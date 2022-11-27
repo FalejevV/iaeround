@@ -186,7 +186,7 @@ function ProfileSettings(props:{
                     
                         <ProfileSettingsContainer>
                             <AvatarContainer>
-                                <PreviewAvatar src={typeof avatar === "object" ? URL.createObjectURL(avatar) :profileData.id !== "" ? profileImageURLAvatar(profileData.id) : profileImage} />
+                                <PreviewAvatar src={typeof avatar === "object" ? URL.createObjectURL(avatar) :profileData.id !== "" ? profileImageURLAvatar(profileData.avatar, profileData.id) : profileImage} />
                                 <FileField fileSize={100000} onChange={fileChange} title="Avatar" imageFormat/>
                             </AvatarContainer>
                             <TextField value={profileData.name} title="Name" />

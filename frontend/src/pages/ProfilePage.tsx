@@ -53,7 +53,7 @@ function ProfilePage(props:{
 
                     <AvatarStatsContainer>
 
-                        <Avatar src={profileData.id !== "" ? profileImageURLAvatar(profileData.id) : avatar} />
+                        <Avatar src={profileData.id !== "" ? profileImageURLAvatar(profileData.avatar,profileID) : avatar} />
                         <Stats>
 
                             {isProfileOwner && 

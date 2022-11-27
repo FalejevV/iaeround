@@ -1,15 +1,15 @@
-import { fetchAddress } from "./DeveloperData";
+import { storageCloudURL } from "./DeveloperData";
 import  imageError from "./img/ImageError.svg";
 
-export function profileImageURLAvatar(avatar:string):string{
+export function profileImageURLAvatar(avatar:string, id:string):string{
     if(avatar.trim() === ""){
         return "";
     }
-    return `${fetchAddress}/storage/avatar/${avatar}.jpeg`
+    return `${storageCloudURL}/avatar/${id}/${avatar}`;
 }
 
 export function routeImageURL(routeId:string, imageName:string){
-    return `${fetchAddress}/storage/img/${routeId}/${imageName}`;
+    return `${storageCloudURL}/img/${routeId}/${imageName}`;
 }
 
 export function errorImageReplace(imageElement:any){
