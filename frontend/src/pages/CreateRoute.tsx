@@ -9,6 +9,7 @@ import NumberField from "../components/inputfield/NumberField";
 import FileField from "../components/inputfield/FileField";
 import TextAreaField from "../components/inputfield/TextAreaField";
 import { fetchAddress } from "../DeveloperData";
+import { compressMultipleImages } from "../UsefulFunctions";
 
 function CreateRoute(props:{
     headerExtend:any
@@ -35,7 +36,7 @@ function CreateRoute(props:{
         }
     }
 
-    function formSubmit(e:FormEvent<HTMLFormElement>){
+    async function formSubmit(e:FormEvent<HTMLFormElement>){
         e.preventDefault();
         const titleInput = e.currentTarget.elements[0] as HTMLInputElement;
         const distanceInput = e.currentTarget.elements[1] as HTMLInputElement;
@@ -43,26 +44,29 @@ function CreateRoute(props:{
         const gpxInput = e.currentTarget.elements[3] as HTMLInputElement;
         const imagesInput = e.currentTarget.elements[4] as HTMLInputElement;
         const aboutInput = e.currentTarget.elements[5] as HTMLInputElement;
-
-        const bodyResult = {
-            title: titleInput.value,
-            distance: distanceInput.value,
-            time: timeInput.value,
-            tags: tags,
-            likes: [],
-            gpx: "gpxInput.files",
-            images: "imagesInput.files",
-            about: aboutInput.value,
+        let formData = new FormData();
+        formData.append('title', titleInput.value);
+        formData.append('distance', distanceInput.value);
+        formData.append('time',timeInput.value);
+        formData.append('about', aboutInput.value);
+        if(gpxInput.files){
+            formData.append('gpx', gpxInput.files[0]);
+        }
+        if(imagesInput.files){
+            let imagesCompressed = await compressMultipleImages(imagesInput.files);
+            imagesCompressed.forEach(file => {
+                formData.append('image', file);
+            })
         }
 
-        const requestOptions = {
+        fetch(fetchAddress + '/api/route', {
             method: 'POST',
+            credentials: 'include',
             headers: { 
-                'Content-Type': 'application/json'
-        },
-            body: JSON.stringify({ bodyResult })
-        };
-        fetch(fetchAddress + '/api/route', requestOptions)
+                'Accept': 'application/json'
+            },
+            body: formData
+        })
             .then(response => response.json())
             .then(data => console.log(data));
     }

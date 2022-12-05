@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { RootState } from "../app/store";
 import FileField from "../components/inputfield/FileField";
-import { profileImageURLAvatar } from "../UsefulFunctions";
+import { profileImageURLAvatar, compressImage } from "../UsefulFunctions";
 import { AvatarContainer, Divider, EmailChangeContainer, InfoText, PasswordChangeContainer, PasswordChangeTitle, PreviewAvatar, ProfileForm, ProfileSettingsContainer, SaveButton } from "./ProfileSettings.styled";
 import profileImage from "../img/ProfileImage.svg";
 import TextField from "../components/inputfield/TextField";
@@ -36,12 +36,13 @@ function ProfileSettings(props:{
         }
     }
 
-    function profileChange(e:FormEvent<HTMLFormElement>){
+    async function profileChange(e:FormEvent<HTMLFormElement>){
         e.preventDefault();
         const target:any = e.target;
         const name = target.name.value;
         const about = target.about.value;
-        const avatar = target.avatar.files[0];
+        let avatar = await compressImage(target.avatar.files[0]);
+        console.log(avatar);
         let formdata = new FormData();
         formdata.append('name', name);
         formdata.append('about', about);
@@ -50,11 +51,7 @@ function ProfileSettings(props:{
             setProfileEditAlert("Some fields are empty");
             return;
         }else{
-            let avatarFile:string | File = "";
-            if(typeof avatar !== "string"){
-                avatarFile = avatar;
-            }
-            if(typeof avatarFile === "object" && avatarFile.size > 1000000){
+            if(typeof avatar === "object" && avatar.size > 1000000){
                 setProfileEditAlert("File size is too big");
                 return;
             }
